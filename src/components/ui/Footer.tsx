@@ -19,6 +19,9 @@ export default function SiteFooter() {
 							<a className="block text-white no-underline hover:underline hover:decoration-white/60" href="/sluzby/">
 								Služby
 							</a>
+							<a className="block text-white no-underline hover:underline hover:decoration-white/60" href="/blog/">
+								Blog
+							</a>
 							<a className="block text-white no-underline hover:underline hover:decoration-white/60" href="/faq/">
 								FAQ
 							</a>

@@ -88,6 +88,40 @@ export function buildFaqPage(url: string, faq: FaqItem[]) {
 	};
 }
 
+export function buildBlogPosting(params: {
+	url: string;
+	headline: string;
+	description: string;
+	datePublished: string;
+	dateModified: string;
+	authorName: string;
+	authorUrl?: string;
+}) {
+	const { url, headline, description, datePublished, dateModified, authorName, authorUrl } = params;
+
+	const author: Record<string, unknown> = {
+		"@type": "Organization",
+		name: authorName
+	};
+	if (authorUrl && authorUrl.trim()) author.url = authorUrl.trim();
+
+	return {
+		"@type": "BlogPosting",
+		"@id": `${url}#post`,
+		mainEntityOfPage: { "@type": "WebPage", "@id": `${url}#webpage` },
+		headline,
+		description,
+		datePublished,
+		dateModified,
+		author,
+		publisher: {
+			"@type": "Organization",
+			name: businessName,
+			url: baseUrl
+		}
+	};
+}
+
 export function buildWebPage(params: {
 	url: string;
 	name: string;
