@@ -20,13 +20,13 @@ export default {
 		extend: {
 			colors: {
 				background: {
-					DEFAULT: "#F6F7F9",
-					subtle: "#EEF1F5",
+					DEFAULT: "#F7F8FA",
+					subtle: "#EEF2F6",
 					card: "#FFFFFF"
 				},
 				text: {
 					primary: "#0B1220",
-					secondary: "#334155",
+					secondary: "#1F2937",
 					muted: "#64748B"
 				},
 				primary: {
@@ -55,6 +55,7 @@ export default {
 			},
 			fontFamily: {
 				sans: [
+					"Inter",
 					"ui-sans-serif",
 					"system-ui",
 					"-apple-system",
@@ -73,7 +74,9 @@ export default {
 			boxShadow: {
 				sm: "0 1px 2px rgba(2, 6, 23, 0.08)",
 				md: "0 10px 22px rgba(2, 6, 23, 0.10)",
-				hover: "0 14px 28px rgba(2, 6, 23, 0.14)"
+				hover: "0 14px 28px rgba(2, 6, 23, 0.14)",
+				elev1: "0 1px 2px rgba(2, 6, 23, 0.08), 0 8px 16px rgba(2, 6, 23, 0.06)",
+				elev2: "0 2px 6px rgba(2, 6, 23, 0.10), 0 16px 32px rgba(2, 6, 23, 0.10)"
 			},
 			transitionDuration: {
 				DEFAULT: "180ms"

@@ -89,10 +89,13 @@ export default function FaqPage() {
 				<Card title="Časté dotazy">
 					<div className="mt-2">
 						{faq.map((it) => (
-							<div key={it.question} className="faqItem">
-								<div className="faqQuestion">{it.question}</div>
+							<details key={it.question} className="faqItem">
+								<summary className="faqQuestion">
+									<span>{it.question}</span>
+									<span className="faqChevron">▾</span>
+								</summary>
 								<div className="faqAnswer">{it.answer}</div>
-							</div>
+							</details>
 						))}
 					</div>
 				</Card>

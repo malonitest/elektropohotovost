@@ -7,15 +7,19 @@
 	html { -webkit-text-size-adjust: 100%; }
 	body {
 		@apply bg-background text-text-primary antialiased;
+		min-height: 100dvh;
 		font-feature-settings: "ss01" 1, "ss02" 1;
 	}
-	a { @apply underline underline-offset-4 decoration-slate-300 hover:decoration-slate-500; }
+	a { @apply text-primary underline underline-offset-4 decoration-slate-300 hover:decoration-slate-500; }
+	a[href^="tel:"] { @apply no-underline font-extrabold text-text-primary; }
+	a[href^="tel:"] span, a[href^="tel:"] strong { @apply text-text-primary; }
 	:focus-visible { @apply outline-none ring-2 ring-primary-ring ring-offset-2 ring-offset-background; }
+	::selection { background: rgba(245, 158, 11, 0.25); }
 
 	h1 { @apply text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.05]; }
 	h2 { @apply text-xl sm:text-2xl font-bold tracking-tight; }
 	h3 { @apply text-lg font-bold; }
-	p { @apply text-base leading-relaxed text-text-secondary; }
+	p { @apply text-base leading-7 text-text-secondary; }
 	small { @apply text-sm text-text-muted; }
 }
 
@@ -34,8 +38,9 @@
 	.badge { @apply inline-flex items-center gap-2 rounded-full border border-line bg-background-subtle px-3 py-1 text-sm font-semibold text-text-primary; }
 
 	.btn {
-		@apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-bold no-underline;
+		@apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-extrabold no-underline;
 		@apply transition duration-200 ease-out;
+		@apply focus-visible:ring-2 focus-visible:ring-primary-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
 	}
 	.btnPrimary {
 		@apply btn bg-accent text-text-primary shadow-sm;
@@ -50,7 +55,7 @@
 		@apply hover:shadow-hover hover:-translate-y-[1px];
 	}
 
-	.safetyCallout { @apply card border-danger/25 bg-danger-soft; }
+	.safetyCallout { @apply card border-danger/25 bg-danger-soft shadow-sm; }
 	.safetyCalloutTitle { @apply font-bold text-danger; }
 	.safetyCalloutText { @apply mt-1 text-text-secondary; }
 
@@ -60,8 +65,17 @@
 	.priceRow b { @apply text-text-primary; }
 	.priceRow span { @apply text-text-secondary; }
 
+	/* FAQ accordion (no JS): use <details class="faqItem"><summary class="faqQuestion">... */
 	.faqItem { @apply border-t border-line py-3; }
-	.faqQuestion { @apply cursor-pointer font-bold text-text-primary; }
+	.faqItem[open] { @apply bg-background-subtle/40; }
+	.faqQuestion {
+		@apply cursor-pointer list-none font-extrabold text-text-primary;
+		@apply flex items-center justify-between gap-4;
+		@apply select-none;
+	}
+	.faqQuestion::-webkit-details-marker { display: none; }
+	.faqChevron { @apply shrink-0 text-text-muted transition duration-200; }
+	.faqItem[open] .faqChevron { @apply rotate-180; }
 	.faqAnswer { @apply mt-2 text-text-secondary; }
 
 	.siteHeader {

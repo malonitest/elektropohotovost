@@ -166,10 +166,13 @@ export default function LocationLandingPage({ params }: { params: { slug: string
 					<Card title="FAQ">
 						<div className="mt-2">
 							{content.faq.map((it) => (
-								<div key={it.question} className="faqItem">
-									<div className="faqQuestion">{it.question}</div>
+								<details key={it.question} className="faqItem">
+									<summary className="faqQuestion">
+										<span>{it.question}</span>
+										<span className="faqChevron">▾</span>
+									</summary>
 									<div className="faqAnswer">{it.answer}</div>
-								</div>
+								</details>
 							))}
 						</div>
 					</Card>
