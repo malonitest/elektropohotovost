@@ -34,6 +34,8 @@ function buildEntries(): UrlEntry[] {
 	add("/");
 	add("/lokality/");
 	add("/sluzby/");
+	add("/sluzby/elektro-pohotovost/");
+	add("/sluzby/hodinovy-manzel/");
 	add("/faq/");
 	add("/cenik/");
 	add("/kontakt/");
@@ -80,7 +82,7 @@ async function main() {
 	const robots = `User-agent: *\nAllow: /\n\nSitemap: ${absoluteUrl("/sitemap.xml")}\n`;
 	await writeFile(path.join(outDir, "robots.txt"), robots, "utf8");
 
-	const llms = `# Elektro pohotovost (CZ)\n\nTento web je statický (SSG) a popisuje službu \"Elektro pohotovost\" – elektrikář nonstop 24/7.\n\n## Struktura webu\n- Domů: /\n- Lokality (seznam + hledání): /lokality/\n- Lokality (detail): /elektro-pohotovost/{slug}/\n- Služby: /sluzby/\n- FAQ: /faq/\n- Ceník: /cenik/\n- Kontakt: /kontakt/\n- Právní informace: /legal/\n\n## Poznámky\n- Každá lokalita má vlastní stránku s unikátním obsahem, FAQ a kontaktem.\n- Mapu zobrazujeme pouze jako iframe/odkaz (bez těžkého SDK).\n\n## Kontakt\n- Telefon a e-mail najdete na /kontakt/\n`;
+	const llms = `# Maloni s.r.o. – Elektro pohotovost (CZ)\n\nTento web je statický (SSG). Primární službou je \"Elektro pohotovost\" – havarijní elektrikář NONSTOP 24/7. Doplňkově nabízíme i samostatnou službu \"Hodinový manžel\" pro plánované opravy a montáže.\n\n## Struktura webu\n- Domů: /\n- Lokality (seznam + hledání): /lokality/\n- Lokality (detail): /elektro-pohotovost/{slug}/\n- Služby (přehled): /sluzby/\n- Služby (elektro pohotovost): /sluzby/elektro-pohotovost/\n- Služby (hodinový manžel): /sluzby/hodinovy-manzel/\n- FAQ: /faq/\n- Ceník: /cenik/\n- Kontakt: /kontakt/\n- Právní informace: /legal/\n\n## Poznámky\n- Elektro pohotovost je havarijní služba 24/7. Hodinový manžel je plánovaná služba (bez havárií).\n- Každá lokalita má vlastní stránku s unikátním obsahem, FAQ a kontaktem.\n- Mapu zobrazujeme pouze jako iframe/odkaz (bez těžkého SDK).\n\n## Kontakt\n- Telefon a e-mail najdete na /kontakt/\n`;
 	await writeFile(path.join(outDir, "llms.txt"), llms, "utf8");
 
 	const humans = `Elektro pohotovost\n\nTechnology:\n- Next.js (App Router, SSG export)\n- React\n- TypeScript\n- Tailwind CSS\n\nProject:\n- Static website optimized for Local SEO & AI search\n\nContact:\n- /kontakt/\n`;

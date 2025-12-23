@@ -1,33 +1,43 @@
 import type { Metadata } from "next";
 
-import Card from "../../src/components/ui/Card";
 import JsonLd from "../../src/components/ui/JsonLd";
+import Card from "../../src/components/ui/Card";
+import PrimaryButton from "../../src/components/ui/PrimaryButton";
 
 import { brandRegionText, siteName } from "../../src/data/site";
 import { absoluteUrl } from "../../src/lib/urls";
-import { graphForGenericPage } from "../../src/lib/jsonld";
+import { buildBreadcrumbList, buildLocalBusiness, buildWebPage } from "../../src/lib/jsonld";
 
 export const dynamic = "error";
 
 export const metadata: Metadata = {
 	title: `Služby | ${siteName}`,
 	description:
-		"Nonstop elektro pohotovost 24/7: výpadek elektřiny, shozený jistič, zkrat, porucha rozvaděče. Výjezdy pro byty, domy i firmy.",
+		"Přehled služeb: elektro pohotovost NONSTOP 24/7 (havarijní zásahy) a hodinový manžel (plánované opravy a montáže). Přehledně, důvěryhodně, bez míchání služeb.",
 	alternates: { canonical: absoluteUrl("/sluzby/") }
 };
 
 export default function ServicesPage() {
 	const canonical = absoluteUrl("/sluzby/");
 
-	const jsonLdGraph = graphForGenericPage({
-		url: canonical,
-		placeName: "Elektro pohotovost",
-		areaServedName: brandRegionText,
-		breadcrumbs: [
-			{ name: "Domů", url: absoluteUrl("/") },
-			{ name: "Služby", url: canonical }
-		]
-	});
+	const breadcrumbs = [
+		{ name: "Domů", url: absoluteUrl("/") },
+		{ name: "Služby", url: canonical }
+	];
+
+	const jsonLdGraph = [
+		buildLocalBusiness(canonical, brandRegionText),
+		buildWebPage({
+			url: canonical,
+			name: "Služby",
+			description:
+				"Přehled služeb: elektro pohotovost NONSTOP 24/7 pro havárie a hodinový manžel pro plánované opravy a montáže."
+		}),
+		buildBreadcrumbList(
+			canonical,
+			breadcrumbs.map((b) => ({ ...b, url: b.url }))
+		)
+	];
 
 	return (
 		<>
@@ -35,40 +45,49 @@ export default function ServicesPage() {
 
 			<section className="section">
 				<div className="sectionHeader">
-					<div className="sectionKicker">Elektrikář NONSTOP 24/7</div>
-					<h1 className="sectionTitle">Elektro pohotovost – služby</h1>
+					<div className="sectionKicker">Přehled</div>
+					<h1 className="sectionTitle">Služby</h1>
 					<p className="sectionLead">
-						Havarijní výjezdy k poruchám elektroinstalace v domácnostech i firmách. Bez zbytečných slibů – dostupnost a cenu vždy upřesníme po telefonu.
+						Elektro pohotovost je naše hlavní konverzní služba (havarijní zásahy NONSTOP 24/7). Hodinový manžel je samostatná, plánovaná služba pro běžné opravy a montáže.
 					</p>
 				</div>
 				<div className="grid gap-4 lg:grid-cols-2">
-					<Card title="Co typicky řešíme">
-						<ul className="mt-3 space-y-2 text-text-secondary">
-							<li>výpadek elektřiny</li>
-							<li>shozený jistič / vybavený proudový chránič</li>
-							<li>zkrat v elektroinstalaci</li>
-							<li>porucha rozvaděče</li>
-							<li>přehřáté zásuvky, jiskření, zápach z elektro</li>
-							<li>nefunkční světla / okruhy</li>
-						</ul>
-					</Card>
-					<Card title="Jak postupujeme">
+					<Card title="Elektro pohotovost NONSTOP (hlavní služba)">
 						<p className="mt-2">
-							Nejprve zajistíme bezpečný stav (odpojení problémového okruhu), uděláme diagnostiku a navrhneme nejrychlejší bezpečné řešení.
-							Pokud je potřeba další materiál, domluvíme provizorní zajištění a další krok.
+							Havarijní zásahy pro poruchy elektroinstalace. Pokud jde o výpadek proudu, zkrat, rozvaděč, jistič nebo chránič, řešíme to NONSTOP 24/7.
 						</p>
-						<p className="mt-4">
-							Působíme v regionu: <b className="text-text-primary">{brandRegionText}</b>. Přesný dojezd závisí na dopravě a vytížení.
+						<ul className="mt-3 space-y-2 text-text-secondary">
+							<li>havarijní charakter, urgentní řešení</li>
+							<li>dostupnost 24/7</li>
+							<li>nejrychlejší cesta je telefon</li>
+						</ul>
+						<div className="mt-4 flex flex-wrap gap-3">
+							<PrimaryButton href="/sluzby/elektro-pohotovost/">Detail služby</PrimaryButton>
+							<a className="btnSecondary" href="/lokality/">Vybrat lokalitu</a>
+						</div>
+					</Card>
+
+					<Card title="Hodinový manžel (plánované práce)">
+						<p className="mt-2">
+							Samostatná služba pro běžné opravy a montáže — bez havárií a bez pohotovosti. Vhodné, když chcete věci udělat pečlivě, v klidu a ve sjednaném termínu.
 						</p>
+						<ul className="mt-3 space-y-2 text-text-secondary">
+							<li>montáže, vrtání, věšení, drobné opravy</li>
+							<li>běžná denní dostupnost (termín domluvou)</li>
+							<li>transparentní odhad předem</li>
+						</ul>
+						<div className="mt-4 flex flex-wrap gap-3">
+							<PrimaryButton href="/sluzby/hodinovy-manzel/">Detail služby</PrimaryButton>
+							<a className="btnSecondary" href="/kontakt/">Objednat</a>
+						</div>
 					</Card>
 				</div>
 
 				<div className="mt-8 card cardPad">
-					<div className="text-base font-bold text-text-primary">Rychlé odkazy</div>
-					<div className="mt-4 flex flex-wrap gap-3">
-						<a className="btnPrimary" href="/kontakt/">Kontakt</a>
-						<a className="btnSecondary" href="/lokality/">Lokality</a>
-					</div>
+					<div className="text-base font-bold text-text-primary">Kde působíme</div>
+					<p className="mt-2">
+						Region: <b className="text-text-primary">{brandRegionText}</b>. U elektro pohotovosti dojezd upřesníme podle provozu; u hodinového manžela domluvíme termín.
+					</p>
 				</div>
 			</section>
 		</>

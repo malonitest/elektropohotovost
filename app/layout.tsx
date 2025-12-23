@@ -32,7 +32,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 							</div>
 							<nav className="navLinks" aria-label="Hlavní navigace">
 								<a className="navLink" href="/lokality/">Lokality</a>
-								<a className="navLink" href="/sluzby/">Služby</a>
+								<details className="navDropdown relative">
+									<summary className="navLink cursor-pointer list-none select-none">
+										<span className="inline-flex items-center gap-1">
+											Služby <span aria-hidden>▾</span>
+										</span>
+									</summary>
+									<div className="navDropdownMenu">
+										<a className="navDropdownItem" href="/sluzby/elektro-pohotovost/">
+											Elektro pohotovost NONSTOP
+										</a>
+										<a className="navDropdownItem" href="/sluzby/hodinovy-manzel/">
+											Hodinový manžel
+										</a>
+									</div>
+								</details>
 								<a className="navLink" href="/faq/">FAQ</a>
 								<a className="navLink" href="/cenik/">Ceník</a>
 								<a className="navLink" href="/kontakt/">Kontakt</a>

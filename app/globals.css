@@ -85,6 +85,14 @@
 	.navLinks { @apply hidden sm:flex items-center gap-2; }
 	.navLink { @apply rounded-lg px-3 py-2 text-sm font-semibold text-text-primary no-underline hover:bg-background-subtle; }
 
+	.navDropdown summary::-webkit-details-marker { display: none; }
+	.navDropdownMenu {
+		@apply absolute right-0 mt-2 min-w-64 rounded-xl border border-line bg-background-card p-2 shadow-md;
+	}
+	.navDropdownItem {
+		@apply block rounded-lg px-3 py-2 text-sm font-semibold text-text-primary no-underline hover:bg-background-subtle;
+	}
+
 	.mobileCallBar {
 		@apply fixed bottom-0 left-0 right-0 z-50 border-t border-line bg-background/90 backdrop-blur;
 	}
