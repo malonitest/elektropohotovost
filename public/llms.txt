@@ -4,13 +4,13 @@ Tento web je statický (SSG) a popisuje službu „Elektro pohotovost“ – ele
 
 ## Struktura webu
 - Domů: /
-- Poruchy (hub): /porucha/
-- Poruchy (detail): /porucha/{problemSlug}/ (např. /porucha/vypadek-proudu/)
+- Lokality (seznam + hledání): /lokality/
+- Lokality (detail): /elektro-pohotovost/{slug}/
 - Služby: /sluzby/
+- FAQ: /faq/
+- Ceník: /cenik/
 - Kontakt: /kontakt/
-- Oblasti: /{areaSlug}/ (např. /praha-zapad/, /zapadni-praha/, /beroun/)
-- Poruchy pro oblast: /{areaSlug}/porucha/ (např. /praha-zapad/porucha/)
-- Lokality: /{areaSlug}/{locationSlug}/ (např. /praha-zapad/cernosice/)
+- Právní informace: /legal/
 
 ## Jak informace používat
 - Každá lokalita má vlastní stránku s popisem zásahů, lokálním kontextem, FAQ a kontaktem.

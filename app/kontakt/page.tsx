@@ -67,7 +67,7 @@ export default function ContactPage() {
 						</p>
 						<div className="mt-4 flex flex-wrap gap-3">
 							{telHref ? <PrimaryButton href={telHref}>Volejte nyní</PrimaryButton> : null}
-							<a className="btnSecondary" href="/porucha/">Typické poruchy</a>
+							<a className="btnSecondary" href="/faq/">FAQ</a>
 						</div>
 						<small className="mt-4 block">Nonstop. Včetně víkendů a svátků.</small>
 					</Card>

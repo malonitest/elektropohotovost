@@ -1,7 +1,7 @@
-import { areas } from "../src/data/areas";
 import { brandRegionText, siteName } from "../src/data/site";
 import { absoluteUrl } from "../src/lib/urls";
 import { graphForGenericPage } from "../src/lib/jsonld";
+import { publishedLocations } from "../data/locations";
 
 import JsonLd from "../src/components/ui/JsonLd";
 import Section from "../src/components/ui/Section";
@@ -37,7 +37,7 @@ export default function HomePage() {
 					</p>
 					<div className="mt-6 flex flex-wrap gap-3">
 						<PrimaryButton href="/kontakt/">Kontakt</PrimaryButton>
-						<a className="btnSecondary" href="/porucha/">Typické poruchy</a>
+						<a className="btnSecondary" href="/lokality/">Zobrazit lokality</a>
 					</div>
 				</div>
 
@@ -60,14 +60,23 @@ export default function HomePage() {
 				</div>
 			</section>
 
-			<Section kicker="Lokality" title="Oblasti, kde vyjíždíme" lead="Vyberte oblast a zobrazte lokality a typické poruchy.">
+			<Section kicker="Lokality" title="Kde vyjíždíme" lead="Vyberte lokalitu – každá stránka má vlastní postup, ceny a kontakty.">
 				<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-					{areas.map((a) => (
-						<a key={a.slug} className="card cardPad no-underline hover:shadow-md transition" href={`/${a.slug}/`}>
-							<div className="text-base font-bold text-text-primary">{a.name}</div>
-							<p className="mt-2">{a.shortIntro}</p>
+					{publishedLocations.slice(0, 12).map((l) => (
+						<a
+							key={l.slug}
+							className="card cardPad no-underline hover:shadow-md transition"
+							href={`/elektro-pohotovost/${l.slug}/`}
+						>
+							<div className="text-base font-bold text-text-primary">{l.name}</div>
+							<p className="mt-2">
+								Elektro pohotovost {l.name}: výpadek proudu, jističe, zkraty, rozvaděče.
+							</p>
 						</a>
 					))}
+				</div>
+				<div className="mt-6">
+					<a className="btnSecondary" href="/lokality/">Zobrazit všechny lokality</a>
 				</div>
 			</Section>
 		</>

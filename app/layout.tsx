@@ -31,8 +31,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 								<div className="text-xs text-text-muted">{serviceHours}</div>
 							</div>
 							<nav className="navLinks" aria-label="Hlavní navigace">
-								<a className="navLink" href="/porucha/">Poruchy</a>
+								<a className="navLink" href="/lokality/">Lokality</a>
 								<a className="navLink" href="/sluzby/">Služby</a>
+								<a className="navLink" href="/faq/">FAQ</a>
+								<a className="navLink" href="/cenik/">Ceník</a>
 								<a className="navLink" href="/kontakt/">Kontakt</a>
 							</nav>
 							{telHref ? (

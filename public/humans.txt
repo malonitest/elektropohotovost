@@ -1,8 +1,10 @@
 Elektro pohotovost
 
 Technology:
-- Astro (SSG)
+- Next.js (App Router, SSG export)
 - TypeScript
+- React
+- Tailwind CSS
 
 Project:
 - Static website optimized for Local SEO & AI search

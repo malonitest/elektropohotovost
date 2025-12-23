@@ -67,7 +67,7 @@ export default function ServicesPage() {
 					<div className="text-base font-bold text-text-primary">Rychlé odkazy</div>
 					<div className="mt-4 flex flex-wrap gap-3">
 						<a className="btnPrimary" href="/kontakt/">Kontakt</a>
-						<a className="btnSecondary" href="/porucha/">Typické poruchy</a>
+						<a className="btnSecondary" href="/lokality/">Lokality</a>
 					</div>
 				</div>
 			</section>

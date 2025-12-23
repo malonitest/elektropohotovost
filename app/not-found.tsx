@@ -8,12 +8,12 @@ export default function NotFound() {
 				<Card title="Co můžete udělat">
 					<ul className="mt-2 space-y-2 text-text-secondary">
 						<li>Vraťte se na úvodní stránku.</li>
-						<li>Podívejte se na typické poruchy.</li>
+						<li>Vyhledejte lokalitu v seznamu.</li>
 						<li>Kontaktujte nás v případě havárie.</li>
 					</ul>
 					<div className="mt-4 flex flex-wrap gap-3">
 						<a className="btnSecondary" href="/">Domů</a>
-						<a className="btnSecondary" href="/porucha/">Poruchy</a>
+						<a className="btnSecondary" href="/lokality/">Lokality</a>
 						<a className="btnPrimary" href="/kontakt/">Kontakt</a>
 					</div>
 				</Card>

@@ -2,17 +2,8 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
-import { areas } from "../src/data/areas";
-import { publishedLocations } from "../src/data/locations";
-import { problems } from "../src/data/problems";
-import {
-	absoluteUrl,
-	pathForArea,
-	pathForAreaProblemHub,
-	pathForLocation,
-	pathForProblem,
-	pathForProblemHub
-} from "../src/lib/urls";
+import { publishedLocations } from "../data/locations";
+import { absoluteUrl, pathForLocationLanding } from "../src/lib/urls";
 
 function isoLastmod(now = new Date()): string {
 	return now.toISOString();
@@ -41,25 +32,15 @@ function buildEntries(): UrlEntry[] {
 	};
 
 	add("/");
-	add("/elektro-pohotovost-praha/");
-	add("/elektro-pohotovost-praha-zapad/");
-	add("/elektro-pohotovost-beroun/");
-	add("/elektro-pohotovost-stredocesky-kraj-zapad/");
+	add("/lokality/");
 	add("/sluzby/");
+	add("/faq/");
+	add("/cenik/");
 	add("/kontakt/");
-	add(pathForProblemHub());
-
-	for (const area of areas) {
-		add(pathForArea(area.slug));
-		add(pathForAreaProblemHub(area.slug));
-	}
+	add("/legal/");
 
 	for (const loc of publishedLocations) {
-		add(pathForLocation(loc.parentAreaSlug, loc.slug));
-	}
-
-	for (const p of problems) {
-		add(pathForProblem(p.slug));
+		add(pathForLocationLanding(loc.slug));
 	}
 
 	return entries;
@@ -98,6 +79,12 @@ async function main() {
 
 	const robots = `User-agent: *\nAllow: /\n\nSitemap: ${absoluteUrl("/sitemap.xml")}\n`;
 	await writeFile(path.join(outDir, "robots.txt"), robots, "utf8");
+
+	const llms = `# Elektro pohotovost (CZ)\n\nTento web je statický (SSG) a popisuje službu \"Elektro pohotovost\" – elektrikář nonstop 24/7.\n\n## Struktura webu\n- Domů: /\n- Lokality (seznam + hledání): /lokality/\n- Lokality (detail): /elektro-pohotovost/{slug}/\n- Služby: /sluzby/\n- FAQ: /faq/\n- Ceník: /cenik/\n- Kontakt: /kontakt/\n- Právní informace: /legal/\n\n## Poznámky\n- Každá lokalita má vlastní stránku s unikátním obsahem, FAQ a kontaktem.\n- Mapu zobrazujeme pouze jako iframe/odkaz (bez těžkého SDK).\n\n## Kontakt\n- Telefon a e-mail najdete na /kontakt/\n`;
+	await writeFile(path.join(outDir, "llms.txt"), llms, "utf8");
+
+	const humans = `Elektro pohotovost\n\nTechnology:\n- Next.js (App Router, SSG export)\n- React\n- TypeScript\n- Tailwind CSS\n\nProject:\n- Static website optimized for Local SEO & AI search\n\nContact:\n- /kontakt/\n`;
+	await writeFile(path.join(outDir, "humans.txt"), humans, "utf8");
 
 	// eslint-disable-next-line no-console
 	console.log(`sitemap.xml generated (${entries.length} URLs)`);

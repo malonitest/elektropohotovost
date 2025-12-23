@@ -1,6 +1,6 @@
 import type { Area } from "../data/areas";
 import type { Location } from "../data/locations";
-import { businessAddress, businessName, email, googleBusinessProfileUrl, phone, siteName } from "../data/site";
+import { baseUrl, businessAddress, businessName, email, googleBusinessProfileUrl, phone, siteName } from "../data/site";
 import type { FaqItem } from "./content";
 
 export type BreadcrumbItem = { name: string; url: string };
@@ -88,6 +88,23 @@ export function buildFaqPage(url: string, faq: FaqItem[]) {
 	};
 }
 
+export function buildWebPage(params: {
+	url: string;
+	name: string;
+	description?: string;
+}) {
+	const { url, name, description } = params;
+	const page: Record<string, unknown> = {
+		"@type": "WebPage",
+		"@id": `${url}#webpage`,
+		url,
+		name,
+		isPartOf: { "@id": `${baseUrl}#website` }
+	};
+	if (description && description.trim()) page.description = description.trim();
+	return page;
+}
+
 export function graphForAreaPage(params: {
 	url: string;
 	area: Area;
@@ -133,6 +150,24 @@ export function graphForGenericPage(params: {
 		buildBreadcrumbList(url, breadcrumbs)
 	];
 	if (faq.length) graph.push(buildFaqPage(url, faq));
+	return graph;
+}
+
+export function graphForLocationLandingPage(params: {
+	url: string;
+	placeName: string;
+	pageName: string;
+	pageDescription: string;
+	breadcrumbs?: BreadcrumbItem[];
+	faq: FaqItem[];
+}) {
+	const { url, placeName, pageName, pageDescription, breadcrumbs = [], faq } = params;
+	const graph = [
+		buildLocalBusiness(url, placeName),
+		buildFaqPage(url, faq),
+		buildWebPage({ url, name: pageName, description: pageDescription })
+	];
+	if (breadcrumbs.length) graph.push(buildBreadcrumbList(url, breadcrumbs));
 	return graph;
 }
 

@@ -5,10 +5,30 @@ export default function SiteFooter() {
 	return (
 		<footer className="mt-16 border-t border-line bg-text-primary text-white">
 			<div className="container-app py-10">
-				<div className="grid gap-8 md:grid-cols-3">
+				<div className="grid gap-8 md:grid-cols-4">
 					<div>
 						<div className="text-base font-extrabold">{businessName}</div>
 						<div className="mt-2 text-sm text-white/80">{siteName} – Elektro pohotovost NONSTOP 24/7</div>
+					</div>
+					<div>
+						<div className="text-sm font-bold">Odkazy</div>
+						<div className="mt-2 space-y-2 text-sm text-white/80">
+							<a className="block hover:text-white" href="/lokality/">
+								Lokality
+							</a>
+							<a className="block hover:text-white" href="/sluzby/">
+								Služby
+							</a>
+							<a className="block hover:text-white" href="/faq/">
+								FAQ
+							</a>
+							<a className="block hover:text-white" href="/cenik/">
+								Ceník
+							</a>
+							<a className="block hover:text-white" href="/legal/">
+								Právní informace
+							</a>
+						</div>
 					</div>
 					<div>
 						<div className="text-sm font-bold">Kontakt</div>

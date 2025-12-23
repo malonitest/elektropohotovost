@@ -22,6 +22,10 @@ export function pathForAreaProblemHub(areaSlug: string): string {
 	return `/${areaSlug}/porucha/`;
 }
 
+export function pathForLocationLanding(locationSlug: string): string {
+	return `/elektro-pohotovost/${locationSlug}/`;
+}
+
 export function absoluteUrl(pathname: string): string {
 	const normalized = pathname.startsWith("/") ? pathname : `/${pathname}`;
 	return `${baseUrl}${normalized}`;
