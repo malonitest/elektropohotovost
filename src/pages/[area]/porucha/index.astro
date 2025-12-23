@@ -1,0 +1,96 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Hero from "../../../components/Hero.astro";
+import CTA from "../../../components/CTA.astro";
+import ProblemCard from "../../../components/ProblemCard.astro";
+
+import { areas, areaBySlug } from "../../../data/areas";
+import { problems } from "../../../data/problems";
+import { locations } from "../../../data/locations";
+
+import { pickProblemsForArea } from "../../../lib/problems";
+import { graphForProblemHubPage } from "../../../lib/jsonld";
+import {
+	canonicalForAreaProblemHub,
+	pathForArea,
+	pathForAreaProblemHub,
+	pathForLocation,
+	pathForProblemHub
+} from "../../../lib/urls";
+
+export function getStaticPaths() {
+	return areas.map((a) => ({ params: { area: a.slug } }));
+}
+
+const areaSlug = Astro.params.area!;
+const area = areaBySlug.get(areaSlug);
+if (!area) throw new Error(`Unknown area: ${areaSlug}`);
+
+const title = `Elektro poruchy v oblasti ${area.name} | Elektro pohotovost – co dělat a kdy volat`;
+const description =
+	`Top elektro poruchy pro oblast ${area.name}: příznaky, příčiny a bezpečné kroky. Kdy volat elektro pohotovost (24/7) a čemu se vyhnout.`.length > 160
+		? `Top elektro poruchy pro oblast ${area.name}: příznaky, příčiny a bezpečné kroky. Kdy volat elektro pohotovost (24/7).`.slice(0, 157) + "…"
+		: `Top elektro poruchy pro oblast ${area.name}: příznaky, příčiny a bezpečné kroky. Kdy volat elektro pohotovost (24/7) a čemu se vyhnout.`;
+
+const canonical = canonicalForAreaProblemHub(area.slug);
+
+const breadcrumbs = [
+	{ name: "Domů", url: "/" },
+	{ name: area.name, url: pathForArea(area.slug) },
+	{ name: "Poruchy", url: pathForAreaProblemHub(area.slug) }
+];
+
+const jsonLdGraph = graphForProblemHubPage({
+	url: canonical,
+	breadcrumbs: breadcrumbs.map((b) => ({ ...b, url: new URL(b.url, canonical).toString() }))
+});
+
+const topProblems = pickProblemsForArea({ area, problems, count: 8 });
+
+const topLocations = locations
+	.filter((l) => l.publish)
+	.filter((l) => l.parentAreaSlug === area.slug)
+	.filter((l) => l.priority === 1)
+	.sort((a, b) => a.name.localeCompare(b.name, "cs"))
+	.slice(0, 5);
+---
+<BaseLayout title={title} description={description} canonical={canonical} breadcrumbs={breadcrumbs} jsonLdGraph={jsonLdGraph}>
+	<Hero
+		h1={`Elektro poruchy v oblasti ${area.name} – co dělat a kdy volat`}
+		kicker="Oblastní přehled: praktické postupy a FAQ"
+		badges={["Top poruchy", "Bezpečné kroky", "Nonstop 24/7"]}
+	/>
+
+	<section class="section card card-pad" aria-label="O stránce">
+		<p style="margin-top:0">
+			Tahle stránka je „hub“ pro nejčastější elektro poruchy, se kterými v oblasti {area.name} typicky vyjíždíme.
+			Detaily jsou psané tak, abyste se rychle zorientovali – bez nebezpečných návodů a bez práce pod napětím.
+		</p>
+		<p style="margin-bottom:0">
+			Chcete kompletní seznam poruch? <a href={pathForProblemHub()}>Poruchy – celý přehled</a>.
+		</p>
+	</section>
+
+	<section class="section grid" aria-label="Top poruchy v oblasti">
+		{topProblems.map((p) => (
+			<ProblemCard problem={p} />
+		))}
+	</section>
+
+	<section class="section card card-pad" aria-label="Lokality">
+		<div class="h2">Lokality v oblasti {area.name}</div>
+		<p class="hint" style="margin-top:0">
+			Pro lokální kontakt a kontext vyberte lokalitu. Linkujeme jen publikované lokality.
+		</p>
+		<ul class="list">
+			{topLocations.map((l) => (
+				<li><a href={pathForLocation(l.parentAreaSlug, l.slug)}>{l.name}</a></li>
+			))}
+		</ul>
+		<p class="hint" style="margin-bottom:0">
+			<a href={pathForArea(area.slug)}>Zobrazit všechny lokality v oblasti {area.name}</a>
+		</p>
+	</section>
+
+	<CTA placeName={area.name} />
+</BaseLayout>

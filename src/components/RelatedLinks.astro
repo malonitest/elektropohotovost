@@ -1,0 +1,61 @@
+---
+import type { Area } from "../data/areas";
+import type { Location } from "../data/locations";
+import type { Problem } from "../data/problems";
+import { areas } from "../data/areas";
+import { pathForArea, pathForLocation } from "../lib/urls";
+
+export type Props = {
+	problem: Problem;
+	relatedProblems: Problem[];
+	locationLinks: {
+		areasOnly: boolean;
+		selected: Location[];
+	};
+	areasBySlug?: Map<string, Area>;
+};
+
+const { problem, relatedProblems, locationLinks } = Astro.props;
+const areaMap = Astro.props.areasBySlug;
+---
+<section class="section card card-pad" aria-label="Související odkazy">
+	<div class="h2">Související poruchy</div>
+	{relatedProblems.length ? (
+		<ul class="list">
+			{relatedProblems.map((p) => (
+				<li><a href={`/porucha/${p.slug}/`}>{p.name}</a></li>
+			))}
+		</ul>
+	) : (
+		<p class="hint" style="margin:0">Další poruchy doplníme postupně.</p>
+	)}
+
+	<div class="hr" role="separator" />
+	<div class="h2">Elektro pohotovost v okolí – rychlý výjezd</div>
+	<p class="hint" style="margin-top:0">
+		Výjezd obvykle dle provozu a dopravy. Linkujeme jen publikované lokality.
+	</p>
+
+	{locationLinks.areasOnly ? (
+		<div style="display:flex; gap:10px; flex-wrap:wrap">
+			{areas.map((a) => (
+				<a class="btn btnSecondary" href={pathForArea(a.slug)}>
+					{a.name}
+				</a>
+			))}
+		</div>
+	) : (
+		<ul class="list">
+			{locationLinks.selected.map((l) => (
+				<li>
+					<a href={pathForLocation(l.parentAreaSlug, l.slug)}>
+						{l.name}
+					</a>
+					{areaMap?.get(l.parentAreaSlug) ? (
+						<span class="hint"> – {areaMap.get(l.parentAreaSlug)!.name}</span>
+					) : null}
+				</li>
+			))}
+		</ul>
+	)}
+</section>

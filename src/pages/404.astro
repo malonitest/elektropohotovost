@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import { absoluteUrl } from "../lib/urls";
+
+const title = "Stránka nenalezena | Elektro pohotovost";
+const description = "Požadovaná stránka nebyla nalezena. Zkuste hlavní stránky oblastí nebo kontakt.";
+const canonical = absoluteUrl("/404/");
+const breadcrumbs = [{ name: "Domů", url: "/" }, { name: "404", url: "/404/" }];
+---
+<BaseLayout title={title} description={description} canonical={canonical} breadcrumbs={breadcrumbs}>
+	<Hero h1="Stránka nenalezena (404)" kicker="Elektro pohotovost" badges={["Nonstop 24/7"]} />
+	<section class="section card card-pad">
+		<p style="margin-top:0">
+			Omlouváme se, ale tato stránka neexistuje. Pokračujte na <a href="/">domovskou stránku</a>
+			nebo na <a href="/kontakt/">kontakt</a>.
+		</p>
+	</section>
+</BaseLayout>

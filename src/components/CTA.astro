@@ -1,0 +1,35 @@
+---
+import { email, phone, serviceHours, siteName } from "../data/site";
+
+export type Props = {
+	placeName: string;
+};
+
+const { placeName } = Astro.props;
+const hasPhone = typeof phone === "string" && phone.trim().length > 0;
+const hasEmail = typeof email === "string" && email.trim().length > 0;
+---
+<section class="section card card-pad" aria-label="Kontakt">
+	<div class="h2">Zavolat ihned</div>
+	<p class="hint" style="margin-top:0">
+		{siteName} pro {placeName}. {serviceHours}.
+	</p>
+
+	<div class="ctaRow" role="group" aria-label="Primární akce">
+		{hasPhone ? (
+			<a class="btn btnDanger" href={`tel:${phone.replace(/\s+/g, "")}`}>☎ {phone}</a>
+		) : (
+			<span class="badge"><strong>Telefon</strong> doplňte v konfiguraci</span>
+		)}
+		{hasEmail ? (
+			<a class="btn btnSecondary" href={`mailto:${email}`}>✉ {email}</a>
+		) : (
+			<span class="badge"><strong>E‑mail</strong> doplňte v konfiguraci</span>
+		)}
+		<span class="badge"><strong>Nonstop</strong> 24/7</span>
+	</div>
+
+	<p class="hint" style="margin-bottom:0">
+		V akutních situacích (zápach z elektro, jiskření, horké zásuvky) doporučujeme vypnout jistič příslušného okruhu a zavolat.
+	</p>
+</section>

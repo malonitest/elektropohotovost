@@ -1,0 +1,11 @@
+Elektro pohotovost
+
+Technology:
+- Astro (SSG)
+- TypeScript
+
+Project:
+- Static website optimized for Local SEO & AI search
+
+Contact:
+- /kontakt/

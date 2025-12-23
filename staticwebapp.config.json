@@ -1,0 +1,42 @@
+{
+	"globalHeaders": {
+		"X-Content-Type-Options": "nosniff",
+		"Referrer-Policy": "strict-origin-when-cross-origin",
+		"X-Frame-Options": "DENY",
+		"Permissions-Policy": "geolocation=(), microphone=(), camera=()",
+		"Content-Security-Policy": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'"
+	},
+	"routes": [
+		{ "route": "/assets/*", "headers": { "cache-control": "public, max-age=31536000, immutable" } },
+
+		{ "route": "/sluzby", "redirect": "/sluzby/", "statusCode": 301 },
+		{ "route": "/kontakt", "redirect": "/kontakt/", "statusCode": 301 },
+
+		{ "route": "/praha-zapad", "redirect": "/praha-zapad/", "statusCode": 301 },
+		{ "route": "/zapadni-praha", "redirect": "/zapadni-praha/", "statusCode": 301 },
+		{ "route": "/beroun", "redirect": "/beroun/", "statusCode": 301 },
+
+		{ "route": "/praha-zapad/cernosice", "redirect": "/praha-zapad/cernosice/", "statusCode": 301 },
+		{ "route": "/praha-zapad/dobrichovice", "redirect": "/praha-zapad/dobrichovice/", "statusCode": 301 },
+		{ "route": "/praha-zapad/revnice", "redirect": "/praha-zapad/revnice/", "statusCode": 301 },
+		{ "route": "/praha-zapad/roztoky", "redirect": "/praha-zapad/roztoky/", "statusCode": 301 },
+		{ "route": "/praha-zapad/hostivice", "redirect": "/praha-zapad/hostivice/", "statusCode": 301 },
+		{ "route": "/praha-zapad/rudna", "redirect": "/praha-zapad/rudna/", "statusCode": 301 },
+		{ "route": "/praha-zapad/jesenice", "redirect": "/praha-zapad/jesenice/", "statusCode": 301 },
+		{ "route": "/praha-zapad/mnisek-pod-brdy", "redirect": "/praha-zapad/mnisek-pod-brdy/", "statusCode": 301 },
+
+		{ "route": "/zapadni-praha/praha-5", "redirect": "/zapadni-praha/praha-5/", "statusCode": 301 },
+		{ "route": "/zapadni-praha/smichov", "redirect": "/zapadni-praha/smichov/", "statusCode": 301 },
+		{ "route": "/zapadni-praha/praha-6", "redirect": "/zapadni-praha/praha-6/", "statusCode": 301 },
+		{ "route": "/zapadni-praha/dejvice", "redirect": "/zapadni-praha/dejvice/", "statusCode": 301 },
+		{ "route": "/zapadni-praha/brevnov", "redirect": "/zapadni-praha/brevnov/", "statusCode": 301 },
+
+		{ "route": "/beroun/beroun", "redirect": "/beroun/beroun/", "statusCode": 301 },
+		{ "route": "/beroun/kraluv-dvur", "redirect": "/beroun/kraluv-dvur/", "statusCode": 301 }
+	],
+	"responseOverrides": {
+		"404": {
+			"rewrite": "/404/index.html"
+		}
+	}
+}

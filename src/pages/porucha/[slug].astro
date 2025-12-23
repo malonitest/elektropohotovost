@@ -1,0 +1,107 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import TLDR from "../../components/TLDR.astro";
+import FAQ from "../../components/FAQ.astro";
+import CTA from "../../components/CTA.astro";
+import ProblemSections from "../../components/ProblemSections.astro";
+import RelatedLinks from "../../components/RelatedLinks.astro";
+
+import { problems, problemBySlug } from "../../data/problems";
+import { areas, areaBySlug } from "../../data/areas";
+import { locations } from "../../data/locations";
+import { descriptionForProblem, tldrForProblem, titleForProblem, pickLocationsForProblemLinks } from "../../lib/problems";
+import { canonicalForProblem, pathForArea, pathForProblemHub } from "../../lib/urls";
+import { graphForProblemPage } from "../../lib/jsonld";
+
+export function getStaticPaths() {
+	return problems.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const slug = Astro.params.slug!;
+const problem = problemBySlug.get(slug);
+if (!problem) throw new Error(`Unknown problem: ${slug}`);
+
+const title = titleForProblem(problem.name);
+const description = descriptionForProblem(problem);
+const canonical = canonicalForProblem(problem.slug);
+
+const breadcrumbs = [
+	{ name: "Domů", url: "/" },
+	{ name: "Poruchy", url: pathForProblemHub() },
+	{ name: problem.name, url: `/porucha/${problem.slug}/` }
+];
+
+const jsonLdGraph = graphForProblemPage({
+	url: canonical,
+	breadcrumbs: breadcrumbs.map((b) => ({ ...b, url: new URL(b.url, canonical).toString() })),
+	faq: problem.faq
+});
+
+const relatedProblems = problem.relatedProblems
+	.map((s) => problemBySlug.get(s))
+	.filter((p): p is NonNullable<typeof p> => Boolean(p));
+
+const locationLinks = pickLocationsForProblemLinks({
+	mode: problem.locationLinksMode,
+	locations
+});
+
+const intro1 = `U poruchy „${problem.name}“ je nejdůležitější rychle rozlišit, zda jde o závadu v jednom okruhu, ve spotřebiči, nebo o širší problém (např. více okruhů / celý objekt).`;
+const intro2 = `Všechny kroky níže jsou záměrně „common‑sense“ a bezpečné – bez práce pod napětím a bez rozebírání elektroinstalace. Pokud si nejste jistí, raději volejte.`;
+const intro3 = `Když se objeví zápach spáleniny, jiskření nebo přehřívání, je vhodné odstavit okruh (případně hlavní jistič) a řešit to jako urgentní závadu.`;
+---
+<BaseLayout title={title} description={description} canonical={canonical} breadcrumbs={breadcrumbs} jsonLdGraph={jsonLdGraph}>
+	<Hero
+		h1={`${problem.name} – co to znamená a co dělat hned`}
+		kicker="Elektro porucha / havárie – praktický postup"
+		badges={["Bezpečně", "Bez strašení", "Kdy volat 24/7"]}
+	/>
+
+	<TLDR text={tldrForProblem(problem)} />
+
+	<section class="section card card-pad" aria-label="Úvod">
+		<p style="margin-top:0">{intro1}</p>
+		<p>{intro2}</p>
+		<p style="margin-bottom:0">{intro3}</p>
+	</section>
+
+	<ProblemSections
+		symptoms={problem.symptoms}
+		causes={problem.causes}
+		whatToDoNow={problem.whatToDoNow}
+		whatNotToDo={problem.whatNotToDo}
+		whenToCall={problem.whenToCall}
+	/>
+
+	<section class="section card card-pad" aria-label="Poznámky">
+		<div class="h2">Poznámka k diagnostice</div>
+		<p class="hint" style="margin-top:0">
+			Každá instalace je trochu jiná. V praxi se osvědčuje sledovat souvislosti (konkrétní spotřebič, konkrétní místnost,
+			vlhkost, bouřka, zátěž). Tyto informace výrazně zrychlí a zpřesní opravu.
+		</p>
+		<p class="hint" style="margin-bottom:0">
+			Pokud by řešení vyžadovalo zásah do rozvaděče, zásuvky nebo vodičů, je to práce pro kvalifikovaného elektrikáře.
+		</p>
+	</section>
+
+	<FAQ items={problem.faq} />
+
+	<RelatedLinks problem={problem} relatedProblems={relatedProblems} locationLinks={locationLinks} areasBySlug={areaBySlug} />
+
+	<section class="section card card-pad" aria-label="Lokality a oblasti">
+		<div class="h2">Oblasti a lokální stránky</div>
+		<p class="hint" style="margin-top:0">
+			Hledáte konkrétní lokalitu? V oblastech najdete přehled publikovaných měst a městských částí.
+		</p>
+		<div style="display:flex; gap:10px; flex-wrap:wrap">
+			{areas.map((a) => (
+				<a class="btn btnSecondary" href={pathForArea(a.slug)}>
+					{a.name}
+				</a>
+			))}
+		</div>
+	</section>
+
+	<CTA placeName="Praha‑západ, Západní Praha a Beroun" />
+</BaseLayout>

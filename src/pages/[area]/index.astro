@@ -1,0 +1,95 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import TLDR from "../../components/TLDR.astro";
+import Services from "../../components/Services.astro";
+import FAQ from "../../components/FAQ.astro";
+import CTA from "../../components/CTA.astro";
+
+import { areas, areaBySlug } from "../../data/areas";
+import { locations } from "../../data/locations";
+import { problems } from "../../data/problems";
+import { buildAreaCopy } from "../../lib/content";
+import { descriptionForArea, titleFor } from "../../lib/seo";
+import { canonicalForArea, pathForArea, pathForAreaProblemHub, pathForLocation } from "../../lib/urls";
+import { graphForAreaPage } from "../../lib/jsonld";
+import { pickProblemsForArea } from "../../lib/problems";
+
+export function getStaticPaths() {
+	return areas.map((area) => ({ params: { area: area.slug } }));
+}
+
+const areaSlug = Astro.params.area!;
+const area = areaBySlug.get(areaSlug);
+if (!area) throw new Error(`Unknown area: ${areaSlug}`);
+
+const copy = buildAreaCopy(area);
+const title = titleFor(area.name);
+const description = descriptionForArea(area);
+const canonical = canonicalForArea(area);
+
+const areaLocations = locations
+	.filter((l) => l.parentAreaSlug === area.slug)
+	.filter((l) => l.publish);
+
+const topProblems = pickProblemsForArea({ area, problems, count: 6 });
+
+const breadcrumbs = [
+	{ name: "Domů", url: "/" },
+	{ name: area.name, url: pathForArea(area.slug) }
+];
+
+const jsonLdGraph = graphForAreaPage({
+	url: canonical,
+	area,
+	breadcrumbs: breadcrumbs.map((b) => ({ ...b, url: new URL(b.url, canonical).toString() })),
+	faq: copy.faq
+});
+---
+<BaseLayout title={title} description={description} canonical={canonical} breadcrumbs={breadcrumbs} jsonLdGraph={jsonLdGraph}>
+	<Hero
+		h1={copy.h1}
+		kicker="Havarijní elektrikář 24/7"
+		badges={["Nonstop 24/7", "Výjezdy v rámci oblasti", "Bez falešné adresy"]}
+	/>
+
+	<TLDR text={copy.tldr} />
+	<Services
+		description={copy.serviceDescription}
+		localContext={copy.localContext}
+		typicalInterventions={copy.typicalInterventions}
+		whyUs={copy.whyUs}
+	/>
+
+	<section class="section card card-pad" aria-label="Poruchy">
+		<div class="h2">Typické poruchy v oblasti {area.name}</div>
+		<p class="hint" style="margin-top:0">
+			Praktické postupy a FAQ pro nejčastější závady. <a href={pathForAreaProblemHub(area.slug)}>Zobrazit poruchy pro oblast</a>
+		</p>
+		<ul class="list">
+			{topProblems.slice(0, 4).map((p) => (
+				<li><a href={`/porucha/${p.slug}/`}>{p.name}</a></li>
+			))}
+		</ul>
+		<p class="hint" style="margin-bottom:0">
+			<a href={pathForAreaProblemHub(area.slug)}>Další poruchy pro oblast {area.name}</a>
+		</p>
+	</section>
+
+	<section class="section card card-pad" aria-label="Obsluhované lokality">
+		<div class="h2">Lokalita – obsluhované oblasti</div>
+		<p class="hint" style="margin-top:0">
+			Níže jsou vybrané lokality v oblasti {area.name}. Další lokality lze přidat bez změny šablony.
+		</p>
+		<ul class="list">
+			{areaLocations.map((loc) => (
+				<li>
+					<a href={pathForLocation(area.slug, loc.slug)}>{loc.name}</a>
+				</li>
+			))}
+		</ul>
+	</section>
+
+	<FAQ items={copy.faq} />
+	<CTA placeName={area.name} />
+</BaseLayout>

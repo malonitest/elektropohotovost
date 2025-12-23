@@ -1,0 +1,26 @@
+---
+import type { Area } from "../data/areas";
+
+export type Props = {
+	areas: Area[];
+	title?: string;
+};
+
+const { areas, title = "Oblasti" } = Astro.props;
+---
+<section class="section card card-pad" aria-label={title}>
+	<div class="h2">{title}</div>
+	<div class="grid" style="grid-template-columns:1fr">
+		{areas.map((a) => (
+			<a href={`/${a.slug}/`} class="card card-pad" style="text-decoration:none">
+				<div style="display:flex; justify-content:space-between; gap:12px; align-items:flex-start">
+					<div>
+						<div style="font-weight:800">{a.name}</div>
+						<div class="hint" style="margin-top:4px">{a.shortIntro}</div>
+					</div>
+					<span class="badge"><strong>→</strong> {a.slug}</span>
+				</div>
+			</a>
+		))}
+	</div>
+</section>

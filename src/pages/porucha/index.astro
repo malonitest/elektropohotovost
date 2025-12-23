@@ -1,0 +1,68 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import CTA from "../../components/CTA.astro";
+import ProblemCard from "../../components/ProblemCard.astro";
+
+import { problems } from "../../data/problems";
+import { areas } from "../../data/areas";
+import { absoluteUrl, pathForArea, pathForProblemHub } from "../../lib/urls";
+import { graphForProblemHubPage } from "../../lib/jsonld";
+
+const title = "Elektro poruchy a havárie – co dělat a kdy volat elektro pohotovost";
+const description =
+	"Praktický přehled typických elektro poruch: příznaky, příčiny, bezpečné kroky a kdy volat elektrikáře. Long‑tail návody bez práce pod napětím.";
+const canonical = absoluteUrl(pathForProblemHub());
+
+const breadcrumbs = [
+	{ name: "Domů", url: "/" },
+	{ name: "Poruchy", url: pathForProblemHub() }
+];
+
+const jsonLdGraph = graphForProblemHubPage({
+	url: canonical,
+	breadcrumbs: breadcrumbs.map((b) => ({ ...b, url: new URL(b.url, canonical).toString() }))
+});
+
+const sorted = [...problems].sort((a, b) => {
+	if (a.priority !== b.priority) return a.priority - b.priority;
+	return a.name.localeCompare(b.name, "cs");
+});
+---
+<BaseLayout title={title} description={description} canonical={canonical} breadcrumbs={breadcrumbs} jsonLdGraph={jsonLdGraph}>
+	<Hero
+		h1="Elektro poruchy a havárie – co dělat a kdy volat elektro pohotovost"
+		kicker="Praktické návody a orientace (bez práce pod napětím)"
+		badges={["Nonstop 24/7", "Bezpečné kroky", "FAQ + checklist"]}
+	/>
+
+	<section class="section grid" aria-label="Seznam poruch">
+		{sorted.map((p) => (
+			<ProblemCard problem={p} />
+		))}
+	</section>
+
+	<section class="section card card-pad" aria-label="Dostupnost">
+		<div class="h2">Dostupnost 24/7</div>
+		<p class="hint" style="margin:0">
+			Jsme připraveni řešit akutní závady (výpadky proudu, shazování jištění, přehřívání zásuvek).
+			Výjezd je obvykle dle provozu a dopravy.
+		</p>
+	</section>
+
+	<section class="section card card-pad" aria-label="Oblasti">
+		<div class="h2">Oblasti výjezdů</div>
+		<p class="hint" style="margin-top:0">
+			Hledáte lokální stránku s kontaktem, kontextem a nejbližšími lokalitami? Vyberte oblast:
+		</p>
+		<div style="display:flex; gap:10px; flex-wrap:wrap">
+			{areas.map((a) => (
+				<a class="btn btnSecondary" href={pathForArea(a.slug)}>
+					{a.name}
+				</a>
+			))}
+		</div>
+	</section>
+
+	<CTA placeName="Praha‑západ, Západní Praha a Beroun" />
+</BaseLayout>

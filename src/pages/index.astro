@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import TLDR from "../components/TLDR.astro";
+import Areas from "../components/Areas.astro";
+import CTA from "../components/CTA.astro";
+
+import { areas } from "../data/areas";
+import { brandRegionText, siteName } from "../data/site";
+import { absoluteUrl } from "../lib/urls";
+import { graphForGenericPage } from "../lib/jsonld";
+
+const title = `${siteName} | Elektrikář 24/7`;
+const description =
+	"Elektro pohotovost 24/7 pro výpadky elektřiny, zkraty a poruchy rozvaděče. Výjezdy pro byty, domy i firmy v regionu Praha-západ a západní Praha.";
+const canonical = absoluteUrl("/");
+
+const breadcrumbs = [{ name: "Domů", url: "/" }];
+
+const jsonLdGraph = graphForGenericPage({
+	url: canonical,
+	placeName: "Elektro pohotovost",
+	areaServedName: brandRegionText,
+	breadcrumbs: breadcrumbs.map((b) => ({ ...b, url: new URL(b.url, canonical).toString() }))
+});
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} breadcrumbs={breadcrumbs} jsonLdGraph={jsonLdGraph}>
+	<Hero
+		h1="Elektro pohotovost – elektrikář nonstop 24/7"
+		kicker={brandRegionText}
+		badges={["Nonstop 24/7", "Výpadek proudu", "Zkrat", "Rozvaděč"]}
+	/>
+
+	<TLDR text="Řešíme havarijní poruchy elektroinstalace v terénu: výpadky elektřiny, zkraty a závady rozvaděče. Dle situace vyjíždíme obvykle v řádu desítek minut podle dopravy. Jsme k dispozici nonstop 24/7." />
+
+	<section class="section card card-pad" aria-label="O službě">
+		<div class="h2">Kdy volat elektro pohotovost</div>
+		<p style="margin-top:0">
+			Když nejde elektřina, opakovaně padá jistič, je cítit zápach z elektro nebo se přehřívá zásuvka či rozvaděč.
+			Zásah řešíme s důrazem na bezpečnost, jasnou domluvu postupu a doklad o provedení práce.
+		</p>
+		<p class="hint" style="margin-bottom:0">
+			Neuvádíme fiktivní adresu ani falešné recenze. Pro dostupnost a cenu vždy volejte.
+		</p>
+	</section>
+
+	<Areas areas={areas} title="Oblasti, kde vyjíždíme" />
+	<CTA placeName="region" />
+</BaseLayout>

@@ -1,0 +1,18 @@
+---
+import type { FaqItem } from "../lib/content";
+
+export type Props = {
+	items: FaqItem[];
+};
+
+const { items } = Astro.props;
+---
+<section class="section card card-pad" aria-label="FAQ">
+	<div class="h2">FAQ</div>
+	{items.map((it) => (
+		<details style="border-top:1px solid var(--line); padding: 10px 0" open={false}>
+			<summary style="cursor:pointer; font-weight:700">{it.question}</summary>
+			<p class="hint" style="margin:8px 0 0">{it.answer}</p>
+		</details>
+	))}
+</section>

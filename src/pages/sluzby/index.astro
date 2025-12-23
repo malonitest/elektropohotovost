@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import TLDR from "../../components/TLDR.astro";
+import Services from "../../components/Services.astro";
+import CTA from "../../components/CTA.astro";
+
+import { siteName, brandRegionText } from "../../data/site";
+import { titleFor } from "../../lib/seo";
+import { absoluteUrl } from "../../lib/urls";
+import { graphForGenericPage } from "../../lib/jsonld";
+
+const placeName = "Služby";
+const title = `${siteName} | Služby`;
+const description =
+	"Nonstop elektro pohotovost 24/7: výpadek elektřiny, shozený jistič, zkrat, porucha rozvaděče. Výjezdy pro byty, domy i firmy.";
+const canonical = absoluteUrl("/sluzby/");
+
+const tldr =
+	"Havarijní elektrikář 24/7 pro výpadky proudu, zkraty a závady rozvaděče. Pomáháme v terénu bez zbytečných slibů; dostupnost nonstop.";
+
+const copy = {
+	serviceDescription:
+		"Zajišťujeme havarijní výjezdy k poruchám elektroinstalace v domácnostech i firmách. Typicky řešíme výpadek elektřiny, opakovaně padající jistič, zkrat v okruhu, přehřívání zásuvek a poruchy rozvaděčů. Postupujeme bezpečně: nejprve odpojíme problémový okruh, provedeme diagnostiku a následně opravu nebo provizorní zajištění s domluvou dalšího kroku.",
+	localContext:
+		"Působíme v regionu: " + brandRegionText + ". Přesný dojezd závisí na dopravě a vytížení; v akutních případech doporučujeme telefonický kontakt.",
+	typicalInterventions: [
+		"výpadek elektřiny",
+		"shozený jistič",
+		"zkrat v elektroinstalaci",
+		"porucha rozvaděče",
+		"přehřáté zásuvky",
+		"nefunkční světla / okruhy"
+	],
+	whyUs: [
+		"nonstop dostupnost",
+		"rychlá komunikace a domluva postupu",
+		"odborní elektrikáři",
+		"férové ceny",
+		"doklad o provedení práce"
+	]
+};
+
+const breadcrumbs = [
+	{ name: "Domů", url: "/" },
+	{ name: "Služby", url: "/sluzby/" }
+];
+
+const jsonLdGraph = graphForGenericPage({
+	url: canonical,
+	placeName: "Elektro pohotovost",
+	areaServedName: brandRegionText,
+	breadcrumbs: breadcrumbs.map((b) => ({ ...b, url: new URL(b.url, canonical).toString() }))
+});
+---
+<BaseLayout title={title} description={description} canonical={canonical} breadcrumbs={breadcrumbs} jsonLdGraph={jsonLdGraph}>
+	<Hero h1="Elektro pohotovost – služby" kicker="Elektrikář nonstop 24/7" badges={["Výpadky proudu", "Zkraty", "Rozvaděče"]} />
+	<TLDR text={tldr} />
+	<Services
+		description={copy.serviceDescription}
+		localContext={copy.localContext}
+		typicalInterventions={copy.typicalInterventions}
+		whyUs={copy.whyUs}
+	/>
+	<CTA placeName="region" />
+</BaseLayout>

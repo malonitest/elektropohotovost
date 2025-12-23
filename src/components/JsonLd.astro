@@ -1,0 +1,13 @@
+---
+export type Props = {
+	graph: unknown[];
+};
+
+const { graph } = Astro.props;
+const safeGraph = Array.isArray(graph) ? graph : [];
+---
+{safeGraph.length > 0 && (
+	<script type="application/ld+json">
+		{JSON.stringify({ "@context": "https://schema.org", "@graph": safeGraph })}
+	</script>
+)}

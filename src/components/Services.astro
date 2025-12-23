@@ -1,0 +1,35 @@
+---
+export type Props = {
+	description: string;
+	localContext: string;
+	typicalInterventions: string[];
+	whyUs: string[];
+};
+
+const { description, localContext, typicalInterventions, whyUs } = Astro.props;
+---
+<section class="section grid grid-2">
+	<div class="card card-pad">
+		<div class="h2">Služba v lokalitě</div>
+		<p style="margin:0">{description}</p>
+		<div class="hr" role="separator" />
+		<div class="h2">Lokální kontext</div>
+		<p style="margin:0">{localContext}</p>
+	</div>
+
+	<div class="card card-pad">
+		<div class="h2">Typické zásahy</div>
+		<ul class="list">
+			{typicalInterventions.map((item) => (
+				<li>{item}</li>
+			))}
+		</ul>
+		<div class="hr" role="separator" />
+		<div class="h2">Proč zvolit naši elektro pohotovost</div>
+		<ul class="list">
+			{whyUs.map((item) => (
+				<li>{item}</li>
+			))}
+		</ul>
+	</div>
+</section>

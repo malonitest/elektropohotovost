@@ -1,0 +1,20 @@
+---
+export type Props = {
+	h1: string;
+	kicker?: string;
+	badges?: string[];
+};
+
+const { h1, kicker, badges = [] } = Astro.props;
+---
+<section class="section">
+	{typeof kicker === "string" && <div class="kicker">{kicker}</div>}
+	<h1 class="h1">{h1}</h1>
+	{badges.length > 0 && (
+		<div style="display:flex;gap:10px;flex-wrap:wrap">
+			{badges.map((b) => (
+				<span class="badge"><strong>•</strong> {b}</span>
+			))}
+		</div>
+	)}
+</section>

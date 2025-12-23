@@ -1,0 +1,11 @@
+---
+export type Props = {
+	text: string;
+};
+
+const { text } = Astro.props;
+---
+<section class="section card card-pad" aria-label="TL;DR">
+	<div class="h2">TL;DR</div>
+	<p class="hint" style="margin:0">{text}</p>
+</section>

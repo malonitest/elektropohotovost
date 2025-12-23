@@ -1,0 +1,118 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import TLDR from "../../components/TLDR.astro";
+import Services from "../../components/Services.astro";
+import FAQ from "../../components/FAQ.astro";
+import CTA from "../../components/CTA.astro";
+
+import { areaBySlug } from "../../data/areas";
+import { locations } from "../../data/locations";
+import { problems } from "../../data/problems";
+import { buildLocationCopy } from "../../lib/content";
+import { descriptionForLocation, titleFor } from "../../lib/seo";
+import { canonicalForLocation, pathForArea, pathForLocation } from "../../lib/urls";
+import { buildLocationNameIndex, tryResolveNearbyToLocation } from "../../lib/lookup";
+import { graphForLocationPage } from "../../lib/jsonld";
+import { pickProblemsForLocation } from "../../lib/problems";
+
+export function getStaticPaths() {
+	return locations.map((l) => ({ params: { area: l.parentAreaSlug, slug: l.slug } }));
+}
+
+const areaSlug = Astro.params.area!;
+const slug = Astro.params.slug!;
+
+const area = areaBySlug.get(areaSlug);
+if (!area) throw new Error(`Unknown area: ${areaSlug}`);
+
+const location = locations.find((l) => l.parentAreaSlug === areaSlug && l.slug === slug);
+if (!location) throw new Error(`Unknown location: ${areaSlug}/${slug}`);
+
+const copy = buildLocationCopy(location, area);
+const title = titleFor(location.name);
+const description = descriptionForLocation(location);
+const canonical = canonicalForLocation(location);
+
+const breadcrumbs = [
+	{ name: "Domů", url: "/" },
+	{ name: area.name, url: pathForArea(area.slug) },
+	{ name: location.name, url: pathForLocation(area.slug, location.slug) }
+];
+
+const jsonLdGraph = graphForLocationPage({
+	url: canonical,
+	area,
+	location,
+	breadcrumbs: breadcrumbs.map((b) => ({ ...b, url: new URL(b.url, canonical).toString() })),
+	faq: copy.faq
+});
+
+const index = buildLocationNameIndex(locations);
+const nearbyResolved = location.nearby.map((t) => ({
+	text: t,
+	resolved: (() => {
+		const resolved = tryResolveNearbyToLocation(t, index);
+		return resolved?.publish ? resolved : undefined;
+	})()
+}));
+
+const commonProblemsHere = pickProblemsForLocation({ location, problems });
+---
+<BaseLayout title={title} description={description} canonical={canonical} breadcrumbs={breadcrumbs} jsonLdGraph={jsonLdGraph}>
+	<Hero
+		h1={copy.h1}
+		kicker={`Oblast: ${area.name}`}
+		badges={["Nonstop 24/7", "Havarijní zásahy", "Byty / domy / firmy"]}
+	/>
+
+	<TLDR text={copy.tldr} />
+	<Services
+		description={copy.serviceDescription}
+		localContext={copy.localContext}
+		typicalInterventions={copy.typicalInterventions}
+		whyUs={copy.whyUs}
+	/>
+
+	<section class="section card card-pad" aria-label="Nejčastější poruchy">
+		<div class="h2">Řešíme v {location.name} nejčastěji</div>
+		<p class="hint" style="margin-top:0">
+			Praktické návody: příznaky, příčiny, bezpečné kroky a kdy volat. (Bez práce pod napětím.)
+		</p>
+		<ul class="list">
+			{commonProblemsHere.map((p) => (
+				<li>
+					<a href={`/porucha/${p.slug}/`}>{p.name}</a>
+				</li>
+			))}
+		</ul>
+	</section>
+
+	<section class="section card card-pad" aria-label="Okolí">
+		<div class="h2">Lokalita – okolí</div>
+		<p class="hint" style="margin-top:0">
+			Zajišťujeme výjezdy i pro okolí {location.name}. Pokud je položka na webu, je prolinkovaná.
+		</p>
+		<ul class="list">
+			{nearbyResolved.map((n) => (
+				<li>
+					{n.resolved ? (
+						<a
+							href={pathForLocation(n.resolved.parentAreaSlug, n.resolved.slug)}
+						>
+							{n.text}
+						</a>
+					) : (
+						n.text
+					)}
+				</li>
+			))}
+		</ul>
+		<p class="hint" style="margin-bottom:0">
+			<a href={pathForArea(area.slug)}>Zpět na hlavní oblast {area.name}</a>
+		</p>
+	</section>
+
+	<FAQ items={copy.faq} />
+	<CTA placeName={location.name} />
+</BaseLayout>

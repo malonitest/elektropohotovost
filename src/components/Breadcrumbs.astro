@@ -1,0 +1,19 @@
+---
+export type BreadcrumbItem = { name: string; url: string };
+
+export type Props = {
+	items: BreadcrumbItem[];
+};
+
+const { items } = Astro.props;
+---
+{items.length > 0 && (
+	<nav class="breadcrumbs" aria-label="Drobečková navigace">
+		{items.map((b, i) => (
+			<>
+				{i > 0 && <span class="sep">/</span>}
+				<a href={b.url}>{b.name}</a>
+			</>
+		))}
+	</nav>
+)}

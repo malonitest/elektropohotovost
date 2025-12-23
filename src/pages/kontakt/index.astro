@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import TLDR from "../../components/TLDR.astro";
+import CTA from "../../components/CTA.astro";
+
+import { email, phone, serviceHours, siteName, brandRegionText } from "../../data/site";
+import { absoluteUrl } from "../../lib/urls";
+import { graphForGenericPage } from "../../lib/jsonld";
+
+const title = `${siteName} | Kontakt`;
+const description =
+	"Kontakt na elektro pohotovost 24/7. Nonstop řešíme výpadky elektřiny, zkraty a poruchy rozvaděče. Pro cenu a dostupnost vždy volejte.";
+const canonical = absoluteUrl("/kontakt/");
+
+const breadcrumbs = [
+	{ name: "Domů", url: "/" },
+	{ name: "Kontakt", url: "/kontakt/" }
+];
+
+const jsonLdGraph = graphForGenericPage({
+	url: canonical,
+	placeName: "Kontakt",
+	areaServedName: brandRegionText,
+	breadcrumbs: breadcrumbs.map((b) => ({ ...b, url: new URL(b.url, canonical).toString() }))
+});
+---
+<BaseLayout title={title} description={description} canonical={canonical} breadcrumbs={breadcrumbs} jsonLdGraph={jsonLdGraph}>
+	<Hero h1="Kontakt – Elektro pohotovost" kicker="Elektrikář nonstop 24/7" badges={[serviceHours, brandRegionText]} />
+	<TLDR text="Pro dostupnost a orientační cenu vždy volejte. V akutních situacích doporučujeme vypnout jistič postiženého okruhu." />
+
+	<section class="section card card-pad" aria-label="Kontaktní údaje">
+		<div class="h2">Kontaktní údaje</div>
+		<ul class="list">
+			<li>
+				<strong>Telefon:</strong> {phone?.trim() ? phone : "(doplňte v konfiguraci)"}
+			</li>
+			<li>
+				<strong>E‑mail:</strong> {email?.trim() ? email : "(doplňte v konfiguraci)"}
+			</li>
+			<li>
+				<strong>Hodiny:</strong> {serviceHours}
+			</li>
+			<li>
+				<strong>Region:</strong> {brandRegionText}
+			</li>
+		</ul>
+		<p class="hint" style="margin-bottom:0">
+			Neuvádíme fiktivní adresu. Pokud máte fakturační údaje / sídlo, doplňte je až ve chvíli, kdy budou ověřené.
+		</p>
+	</section>
+
+	<CTA placeName="region" />
+</BaseLayout>

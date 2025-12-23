@@ -1,0 +1,54 @@
+---
+export type Props = {
+	symptoms: string[];
+	causes: string[];
+	whatToDoNow: string[];
+	whatNotToDo: string[];
+	whenToCall: string[];
+};
+
+const { symptoms, causes, whatToDoNow, whatNotToDo, whenToCall } = Astro.props;
+---
+<section class="section grid grid-2" aria-label="Sekce poruchy">
+	<div class="card card-pad">
+		<div class="h2">Příznaky</div>
+		<ul class="list">
+			{symptoms.map((s) => (
+				<li>{s}</li>
+			))}
+		</ul>
+
+		<div class="hr" role="separator" />
+		<div class="h2">Nejčastější příčiny</div>
+		<ul class="list">
+			{causes.map((c) => (
+				<li>{c}</li>
+			))}
+		</ul>
+	</div>
+
+	<div class="card card-pad">
+		<div class="h2">Co udělat teď (bezpečně)</div>
+		<ul class="list">
+			{whatToDoNow.map((d) => (
+				<li>{d}</li>
+			))}
+		</ul>
+
+		<div class="hr" role="separator" />
+		<div class="h2">Čemu se vyhnout</div>
+		<ul class="list">
+			{whatNotToDo.map((d) => (
+				<li>{d}</li>
+			))}
+		</ul>
+
+		<div class="hr" role="separator" />
+		<div class="h2">Kdy volat elektrikáře</div>
+		<ul class="list">
+			{whenToCall.map((d) => (
+				<li>{d}</li>
+			))}
+		</ul>
+	</div>
+</section>

@@ -1,0 +1,18 @@
+---
+import type { Problem } from "../data/problems";
+
+export type Props = {
+	problem: Problem;
+};
+
+const { problem } = Astro.props;
+---
+<a href={`/porucha/${problem.slug}/`} class="card card-pad" style="text-decoration:none">
+	<div style="display:flex; justify-content:space-between; gap:12px; align-items:flex-start">
+		<div>
+			<div style="font-weight:800">{problem.name}</div>
+			<div class="hint" style="margin-top:4px">{problem.summary}</div>
+		</div>
+		<span class="badge"><strong>→</strong> detail</span>
+	</div>
+</a>

@@ -1,0 +1,24 @@
+# Elektro pohotovost (CZ)
+
+Tento web je statický (SSG) a popisuje službu „Elektro pohotovost“ – elektrikář nonstop 24/7.
+
+## Struktura webu
+- Domů: /
+- Poruchy (hub): /porucha/
+- Poruchy (detail): /porucha/{problemSlug}/ (např. /porucha/vypadek-proudu/)
+- Služby: /sluzby/
+- Kontakt: /kontakt/
+- Oblasti: /{areaSlug}/ (např. /praha-zapad/, /zapadni-praha/, /beroun/)
+- Poruchy pro oblast: /{areaSlug}/porucha/ (např. /praha-zapad/porucha/)
+- Lokality: /{areaSlug}/{locationSlug}/ (např. /praha-zapad/cernosice/)
+
+## Jak informace používat
+- Každá lokalita má vlastní stránku s popisem zásahů, lokálním kontextem, FAQ a kontaktem.
+- Neuvádíme fiktivní adresu ani falešné recenze.
+
+## Důležité
+- Pro dostupnost a cenu vždy volejte.
+
+## Kontakt
+- Telefon: viz /kontakt/
+- E-mail: viz /kontakt/
