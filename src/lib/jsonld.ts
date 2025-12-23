@@ -1,6 +1,6 @@
 import type { Area } from "../data/areas";
 import type { Location } from "../data/locations";
-import { email, phone, siteName } from "../data/site";
+import { businessAddress, businessName, email, googleBusinessProfileUrl, phone, siteName } from "../data/site";
 import type { FaqItem } from "./content";
 
 export type BreadcrumbItem = { name: string; url: string };
@@ -26,17 +26,28 @@ export function buildLocalBusiness(url: string, areaServedName: string) {
 	const business: Record<string, unknown> = {
 		"@type": "LocalBusiness",
 		"@id": `${url}#business`,
-		name: siteName,
+		name: businessName,
+		alternateName: siteName,
 		url,
 		areaServed: {
 			"@type": "AdministrativeArea",
 			name: areaServedName
+		},
+		address: {
+			"@type": "PostalAddress",
+			streetAddress: businessAddress.streetAddress,
+			addressLocality: businessAddress.addressLocality,
+			postalCode: businessAddress.postalCode,
+			addressCountry: businessAddress.addressCountry
 		},
 		openingHoursSpecification: openingHoursSpecification()
 	};
 
 	if (typeof phone === "string" && phone.trim()) business.telephone = phone.trim();
 	if (typeof email === "string" && email.trim()) business.email = email.trim();
+	if (typeof googleBusinessProfileUrl === "string" && googleBusinessProfileUrl.trim()) {
+		business.sameAs = [googleBusinessProfileUrl.trim()];
+	}
 
 	return business;
 }

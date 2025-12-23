@@ -4,7 +4,16 @@ import Hero from "../../components/Hero.astro";
 import TLDR from "../../components/TLDR.astro";
 import CTA from "../../components/CTA.astro";
 
-import { email, phone, serviceHours, siteName, brandRegionText } from "../../data/site";
+import {
+	brandRegionText,
+	businessAddress,
+	businessName,
+	email,
+	googleBusinessProfileUrl,
+	phone,
+	serviceHours,
+	siteName
+} from "../../data/site";
 import { absoluteUrl } from "../../lib/urls";
 import { graphForGenericPage } from "../../lib/jsonld";
 
@@ -44,10 +53,18 @@ const jsonLdGraph = graphForGenericPage({
 			<li>
 				<strong>Region:</strong> {brandRegionText}
 			</li>
+			<li>
+				<strong>Firma:</strong> {businessName}
+			</li>
+			<li>
+				<strong>Adresa:</strong> {businessAddress.streetAddress}, {businessAddress.addressLocality},{" "}
+				{businessAddress.postalCode}
+			</li>
+			<li>
+				<strong>Google Business:</strong>{" "}
+				<a href={googleBusinessProfileUrl} rel="noopener noreferrer" target="_blank">Profil firmy</a>
+			</li>
 		</ul>
-		<p class="hint" style="margin-bottom:0">
-			Neuvádíme fiktivní adresu. Pokud máte fakturační údaje / sídlo, doplňte je až ve chvíli, kdy budou ověřené.
-		</p>
 	</section>
 
 	<CTA placeName="region" />
