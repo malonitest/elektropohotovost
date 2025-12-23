@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
@@ -79,6 +79,14 @@ async function main() {
 	const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 	const distDir = path.join(repoRoot, "dist");
 	await mkdir(distDir, { recursive: true });
+
+	// Copy SWA routing/headers config into the deployed artifact root.
+	try {
+		const swaConfig = await readFile(path.join(repoRoot, "staticwebapp.config.json"));
+		await writeFile(path.join(distDir, "staticwebapp.config.json"), swaConfig);
+	} catch {
+		// optional
+	}
 
 	const entries = buildEntries();
 	const xml = renderSitemap(entries);
