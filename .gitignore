@@ -1,5 +1,8 @@
 # build output
 dist/
+# next.js build output
+.next/
+out/
 # generated types
 .astro/
 

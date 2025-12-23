@@ -3,9 +3,11 @@ export type Props = {
 	h1: string;
 	kicker?: string;
 	badges?: string[];
+	cta?: { href: string; text: string };
+	ctaNote?: string;
 };
 
-const { h1, kicker, badges = [] } = Astro.props;
+const { h1, kicker, badges = [], cta, ctaNote } = Astro.props;
 ---
 <section class="section">
 	{typeof kicker === "string" && <div class="kicker">{kicker}</div>}
@@ -17,4 +19,12 @@ const { h1, kicker, badges = [] } = Astro.props;
 			))}
 		</div>
 	)}
+	{cta?.href && cta?.text ? (
+		<div style="margin-top:12px">
+			<a class="btn btnDanger" href={cta.href}>{cta.text}</a>
+			{typeof ctaNote === "string" && ctaNote.trim() ? (
+				<div class="hint" style="margin-top:8px">{ctaNote}</div>
+			) : null}
+		</div>
+	) : null}
 </section>

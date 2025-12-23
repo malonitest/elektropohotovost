@@ -12,6 +12,11 @@
 		{ "route": "/sluzby", "redirect": "/sluzby/", "statusCode": 301 },
 		{ "route": "/kontakt", "redirect": "/kontakt/", "statusCode": 301 },
 
+		{ "route": "/elektro-pohotovost-praha", "redirect": "/elektro-pohotovost-praha/", "statusCode": 301 },
+		{ "route": "/elektro-pohotovost-praha-zapad", "redirect": "/elektro-pohotovost-praha-zapad/", "statusCode": 301 },
+		{ "route": "/elektro-pohotovost-beroun", "redirect": "/elektro-pohotovost-beroun/", "statusCode": 301 },
+		{ "route": "/elektro-pohotovost-stredocesky-kraj-zapad", "redirect": "/elektro-pohotovost-stredocesky-kraj-zapad/", "statusCode": 301 },
+
 		{ "route": "/praha-zapad", "redirect": "/praha-zapad/", "statusCode": 301 },
 		{ "route": "/zapadni-praha", "redirect": "/zapadni-praha/", "statusCode": 301 },
 		{ "route": "/beroun", "redirect": "/beroun/", "statusCode": 301 },

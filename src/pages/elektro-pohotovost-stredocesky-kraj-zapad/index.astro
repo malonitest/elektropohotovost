@@ -1,0 +1,157 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import TLDR from "../../components/TLDR.astro";
+import Services from "../../components/Services.astro";
+import FAQ from "../../components/FAQ.astro";
+import CTA from "../../components/CTA.astro";
+
+import { phone, siteName, serviceHours, brandRegionText } from "../../data/site";
+import { absoluteUrl } from "../../lib/urls";
+import {
+	buildBreadcrumbList,
+	buildFaqPage,
+	buildLocalBusiness,
+	buildService
+} from "../../lib/jsonld";
+
+const placeName = "Středočeský kraj (západ)";
+const urlPath = "/elektro-pohotovost-stredocesky-kraj-zapad/";
+const canonical = absoluteUrl(urlPath);
+
+const title = `Elektro pohotovost ${placeName} – elektrikář nonstop 24/7 | ${siteName}`;
+const description =
+	"Elektro pohotovost ve Středočeském kraji (západ) 24/7: výpadek elektřiny, jistič, zkrat, rozvaděč. Dojezd obvykle 30–90 min dle dopravy. Volejte.";
+
+const telHref = `tel:${String(phone || "").replace(/\s+/g, "")}`;
+
+const tldr =
+	"Elektro pohotovost pro západní část Středočeského kraje: havarijní výjezdy k poruchám elektroinstalace v domácnostech i firmách. Nonstop 24/7.";
+
+const copy = {
+	description:
+		"Zajišťujeme havarijní zásahy při poruchách elektroinstalace v západní části Středočeského kraje. Pomůžeme při výpadku elektřiny, shozených jističích, zkratech v okruzích, přehřívání zásuvek a závadách rozvaděčů. Na místě postupujeme bezpečně: nejdřív odpojíme problémový okruh, uděláme diagnostiku a navrhneme řešení s jasnou domluvou.",
+	localContext:
+		`Nejčastěji vyjíždíme v regionu: ${brandRegionText}. Dojezd se vždy odvíjí od dopravy a vytížení; v akutních případech doporučujeme telefonický kontakt.`,
+	typicalInterventions: [
+		"výpadek elektřiny",
+		"padající jistič nebo chránič",
+		"zkrat v okruhu",
+		"porucha rozvaděče",
+		"přehřáté zásuvky / zápach z elektro",
+		"nefunkční světla / okruhy"
+	],
+	whyUs: [
+		"nonstop dostupnost 24/7",
+		"rychlá domluva a přehledný postup",
+		"bezpečnost na prvním místě",
+		"transparentní cenový rozsah",
+		"doklad o provedení práce"
+	]
+};
+
+const faq = [
+	{
+		question: "Které oblasti v západní části kraje pokrýváte?",
+		answer:
+			"Primárně vyjíždíme v regionu Praha-západ, západní Praha, Beroun a okolí. Pokud jste kousek mimo, zavolejte a řekneme aktuální možnosti." 
+	},
+	{
+		question: "Jak rychle můžete dorazit?",
+		answer:
+			"Dojezd se odvíjí od dopravy a vytížení. Typicky to vychází přibližně 30–90 minut. Pro aktuální odhad je nejlepší zavolat." 
+	},
+	{
+		question: "Řešíte i poruchy u firem a provozoven?",
+		answer:
+			"Ano. U firem se snažíme co nejdřív obnovit napájení prioritních okruhů a navrhnout bezpečné řešení s ohledem na provoz." 
+	},
+	{
+		question: "Jaké jsou orientační ceny?",
+		answer:
+			"Cenu vždy upřesníme po telefonu dle situace. Orientačně: výjezd + diagnostika 1400–2900 Kč, práce 700–1300 Kč/h, materiál dle potřeby po odsouhlasení." 
+	}
+];
+
+const breadcrumbs = [
+	{ name: "Domů", url: "/" },
+	{ name: `Elektro pohotovost ${placeName}`, url: urlPath }
+];
+
+const breadcrumbItems = breadcrumbs.map((b) => ({ ...b, url: new URL(b.url, canonical).toString() }));
+
+const business = buildLocalBusiness(canonical, placeName) as Record<string, unknown>;
+if (typeof business["@type"] === "string") business["@type"] = [business["@type"], "Electrician"];
+
+const service = {
+	...buildService(canonical, placeName),
+	keywords: [
+		"elektro pohotovost",
+		"havarijní elektrikář",
+		"elektrikář nonstop",
+		"24/7",
+		"Středočeský kraj",
+		"západ"
+	]
+};
+
+const jsonLdGraph = [
+	business,
+	service,
+	buildBreadcrumbList(canonical, breadcrumbItems),
+	buildFaqPage(canonical, faq)
+];
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} breadcrumbs={breadcrumbs} jsonLdGraph={jsonLdGraph}>
+	<Hero
+		h1={`Elektro pohotovost – ${placeName} (elektrikář 24/7)`}
+		kicker="Havarijní výjezdy k poruchám elektroinstalace"
+		badges={["Nonstop 24/7", "Jističe", "Zkraty", "Rozvaděče"]}
+		cta={{ href: telHref, text: `Volejte ihned: ${phone}` }}
+		ctaNote={`Dostupnost ${serviceHours}. Dojezd obvykle 30–90 min dle dopravy.`}
+	/>
+
+	<TLDR text={tldr} />
+
+	<Services
+		description={copy.description}
+		localContext={copy.localContext}
+		typicalInterventions={copy.typicalInterventions}
+		whyUs={copy.whyUs}
+	/>
+
+	<section class="section grid grid-2" aria-label="Dostupnost a ceny">
+		<div class="card card-pad">
+			<div class="h2">Dostupnost a dojezd</div>
+			<p style="margin:0">
+				Přijímáme havarijní výjezdy {serviceHours}. Dojezd se typicky pohybuje kolem 30–90 minut podle dopravy a vytížení.
+			</p>
+			<p class="hint" style="margin:10px 0 0">
+				Pokud je cítit zápach z elektro nebo je něco horké na dotek, vypněte jistič okruhu a zavolejte.
+			</p>
+		</div>
+		<div class="card card-pad">
+			<div class="h2">Orientační ceny (rozsah)</div>
+			<ul class="list" style="margin-top:0">
+				<li>Výjezd + diagnostika: 1400–2900 Kč</li>
+				<li>Práce elektrikáře: 700–1300 Kč / hod</li>
+				<li>Materiál: dle potřeby (po odsouhlasení)</li>
+			</ul>
+			<p class="hint" style="margin:0">Konkrétní cenu potvrdíme po telefonu a domluvíme postup.</p>
+		</div>
+	</section>
+
+	<section class="section card card-pad" aria-label="Prolinkování">
+		<div class="h2">Rychlé odkazy</div>
+		<div class="ctaRow">
+			<a class="btn btnSecondary" href="/elektro-pohotovost-praha/">Praha</a>
+			<a class="btn btnSecondary" href="/elektro-pohotovost-praha-zapad/">Praha-západ</a>
+			<a class="btn btnSecondary" href="/elektro-pohotovost-beroun/">Beroun</a>
+			<a class="btn btnSecondary" href="/porucha/">Typické poruchy</a>
+		</div>
+	</section>
+
+	<FAQ items={faq} />
+	<CTA placeName={placeName} />
+</BaseLayout>

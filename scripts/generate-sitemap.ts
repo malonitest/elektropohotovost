@@ -41,6 +41,10 @@ function buildEntries(): UrlEntry[] {
 	};
 
 	add("/");
+	add("/elektro-pohotovost-praha/");
+	add("/elektro-pohotovost-praha-zapad/");
+	add("/elektro-pohotovost-beroun/");
+	add("/elektro-pohotovost-stredocesky-kraj-zapad/");
 	add("/sluzby/");
 	add("/kontakt/");
 	add(pathForProblemHub());
@@ -77,23 +81,23 @@ function renderSitemap(entries: UrlEntry[]): string {
 
 async function main() {
 	const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-	const distDir = path.join(repoRoot, "dist");
-	await mkdir(distDir, { recursive: true });
+	const outDir = path.join(repoRoot, "out");
+	await mkdir(outDir, { recursive: true });
 
 	// Copy SWA routing/headers config into the deployed artifact root.
 	try {
 		const swaConfig = await readFile(path.join(repoRoot, "staticwebapp.config.json"));
-		await writeFile(path.join(distDir, "staticwebapp.config.json"), swaConfig);
+		await writeFile(path.join(outDir, "staticwebapp.config.json"), swaConfig);
 	} catch {
 		// optional
 	}
 
 	const entries = buildEntries();
 	const xml = renderSitemap(entries);
-	await writeFile(path.join(distDir, "sitemap.xml"), xml, "utf8");
+	await writeFile(path.join(outDir, "sitemap.xml"), xml, "utf8");
 
 	const robots = `User-agent: *\nAllow: /\n\nSitemap: ${absoluteUrl("/sitemap.xml")}\n`;
-	await writeFile(path.join(distDir, "robots.txt"), robots, "utf8");
+	await writeFile(path.join(outDir, "robots.txt"), robots, "utf8");
 
 	// eslint-disable-next-line no-console
 	console.log(`sitemap.xml generated (${entries.length} URLs)`);

@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	*, *::before, *::after { box-sizing: border-box; }
+	html { -webkit-text-size-adjust: 100%; }
+	body {
+		@apply bg-background text-text-primary antialiased;
+		font-feature-settings: "ss01" 1, "ss02" 1;
+	}
+	a { @apply underline underline-offset-4 decoration-slate-300 hover:decoration-slate-500; }
+	:focus-visible { @apply outline-none ring-2 ring-primary-ring ring-offset-2 ring-offset-background; }
+
+	h1 { @apply text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.05]; }
+	h2 { @apply text-xl sm:text-2xl font-bold tracking-tight; }
+	h3 { @apply text-lg font-bold; }
+	p { @apply text-base leading-relaxed text-text-secondary; }
+	small { @apply text-sm text-text-muted; }
+}
+
+@layer components {
+	.container-app { @apply container; }
+
+	.section { @apply py-10 sm:py-14; }
+	.sectionHeader { @apply mb-6 sm:mb-8; }
+	.sectionKicker { @apply text-sm font-semibold uppercase tracking-wide text-text-muted; }
+	.sectionTitle { @apply mt-2; }
+	.sectionLead { @apply mt-3 max-w-3xl; }
+
+	.card { @apply rounded-xl bg-background-card border border-line shadow-sm; }
+	.cardPad { @apply p-5 sm:p-6; }
+
+	.badge { @apply inline-flex items-center gap-2 rounded-full border border-line bg-background-subtle px-3 py-1 text-sm font-semibold text-text-primary; }
+
+	.btn {
+		@apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-bold no-underline;
+		@apply transition duration-200 ease-out;
+	}
+	.btnPrimary {
+		@apply btn bg-accent text-text-primary shadow-sm;
+		@apply hover:bg-accent-hover hover:shadow-hover hover:-translate-y-[1px];
+	}
+	.btnSecondary {
+		@apply btn bg-white border border-line text-text-primary;
+		@apply hover:shadow-md hover:-translate-y-[1px];
+	}
+	.btnDanger {
+		@apply btn bg-danger text-white;
+		@apply hover:shadow-hover hover:-translate-y-[1px];
+	}
+
+	.safetyCallout { @apply card border-danger/25 bg-danger-soft; }
+	.safetyCalloutTitle { @apply font-bold text-danger; }
+	.safetyCalloutText { @apply mt-1 text-text-secondary; }
+
+	.priceBox { @apply card bg-background-card; }
+	.priceList { @apply mt-3 space-y-2; }
+	.priceRow { @apply flex items-start justify-between gap-4 text-sm; }
+	.priceRow b { @apply text-text-primary; }
+	.priceRow span { @apply text-text-secondary; }
+
+	.faqItem { @apply border-t border-line py-3; }
+	.faqQuestion { @apply cursor-pointer font-bold text-text-primary; }
+	.faqAnswer { @apply mt-2 text-text-secondary; }
+
+	.siteHeader {
+		@apply sticky top-0 z-40 border-b border-line bg-background/80 backdrop-blur;
+	}
+	.siteNav { @apply flex items-center justify-between gap-4 py-3; }
+	.navLinks { @apply hidden sm:flex items-center gap-2; }
+	.navLink { @apply rounded-lg px-3 py-2 text-sm font-semibold text-text-primary no-underline hover:bg-background-subtle; }
+
+	.mobileCallBar {
+		@apply fixed bottom-0 left-0 right-0 z-50 border-t border-line bg-background/90 backdrop-blur;
+	}
+	.mobileCallBarInner { @apply container flex items-center justify-between gap-3 py-3; }
+}
+
+@layer utilities {
+	.tap { -webkit-tap-highlight-color: transparent; }
+}

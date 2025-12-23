@@ -2,7 +2,7 @@ export const siteName = "Elektro pohotovost" as const;
 
 // Ověřené firemní údaje (používáme i v JSON-LD). Pokud je potřebujete měnit per-env,
 // můžete je přepsat proměnnými prostředí.
-export const businessName = "Maloni sro" as const;
+export const businessName = "Maloni s.r.o." as const;
 export const businessAddress = {
 	streetAddress: "U vodoteče 149",
 	addressLocality: "Vysoký Újezd",
@@ -14,16 +14,17 @@ export const googleBusinessProfileUrl =
 
 // Doplňte před publikováním (canonical + sitemap vyžadují absolutní URL).
 // V Azure Static Web Apps nastavte proměnnou prostředí: PUBLIC_BASE_URL
-const env = (import.meta as any)?.env as Record<string, string> | undefined;
+// (pro Next.js klientské použití lze použít i NEXT_PUBLIC_BASE_URL).
+const env = process.env as Record<string, string | undefined>;
 
 export const baseUrl = (
-	env?.PUBLIC_BASE_URL || process.env.PUBLIC_BASE_URL || "https://example.com"
+	env.NEXT_PUBLIC_BASE_URL || env.PUBLIC_BASE_URL || "https://example.com"
 )
 	.replace(/\/$/, "") as string;
 
 // Kontakty – bez vymyšlených údajů. Doplňte vlastní.
-export const phone = (env?.PUBLIC_PHONE || process.env.PUBLIC_PHONE || "774 621 763") as string;
-export const email = (env?.PUBLIC_EMAIL || process.env.PUBLIC_EMAIL || "") as string;
+export const phone = (env.NEXT_PUBLIC_PHONE || env.PUBLIC_PHONE || "774 621 763") as string;
+export const email = (env.NEXT_PUBLIC_EMAIL || env.PUBLIC_EMAIL || "") as string;
 
 export const serviceHours = "Nonstop 24/7" as const;
 
