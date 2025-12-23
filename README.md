@@ -45,6 +45,7 @@ PUBLIC_BASE_URL=https://www.elektropohotovost24.cz npm run build
 	- Output location: `out`
 	- Build command: `npm run build`
 3. Doplňte env proměnné (`PUBLIC_BASE_URL`, `PUBLIC_PHONE`, `PUBLIC_EMAIL`).
+	- `PUBLIC_BASE_URL` je povinné (produkční build schválně spadne bez správné domény), např. `https://www.elektropohotovost24.cz`
 4. Routing je čistě statický (bez SSR).
 
 Konfigurace SWA je v `staticwebapp.config.json` (security headers, cache headers a redirecty na trailing-slash varianty).
