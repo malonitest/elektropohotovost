@@ -5,14 +5,16 @@ export default function Section(
 		kicker?: string;
 		title: string;
 		lead?: string;
+		titleAs?: "h1" | "h2" | "h3";
 	}>
 ) {
-	const { kicker, title, lead, children } = props;
+	const { kicker, title, lead, titleAs = "h2", children } = props;
+	const TitleTag = titleAs as keyof React.JSX.IntrinsicElements;
 	return (
 		<section className="section">
 			<div className="sectionHeader">
 				{kicker ? <div className="sectionKicker">{kicker}</div> : null}
-				<h2 className="sectionTitle">{title}</h2>
+				<TitleTag className="sectionTitle">{title}</TitleTag>
 				{lead ? <p className="sectionLead">{lead}</p> : null}
 			</div>
 			{children}

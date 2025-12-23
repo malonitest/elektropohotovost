@@ -5,6 +5,9 @@ import type { FaqItem } from "./content";
 
 export type BreadcrumbItem = { name: string; url: string };
 
+const businessId = `${baseUrl}#business`;
+const websiteId = `${baseUrl}#website`;
+
 function openingHoursSpecification() {
 	return {
 		"@type": "OpeningHoursSpecification",
@@ -25,14 +28,10 @@ function openingHoursSpecification() {
 export function buildLocalBusiness(url: string, areaServedName: string) {
 	const business: Record<string, unknown> = {
 		"@type": "LocalBusiness",
-		"@id": `${url}#business`,
+		"@id": businessId,
 		name: businessName,
 		alternateName: siteName,
-		url,
-		areaServed: {
-			"@type": "AdministrativeArea",
-			name: areaServedName
-		},
+		url: baseUrl,
 		address: {
 			"@type": "PostalAddress",
 			streetAddress: businessAddress.streetAddress,
@@ -52,13 +51,22 @@ export function buildLocalBusiness(url: string, areaServedName: string) {
 	return business;
 }
 
+export function buildWebSite() {
+	return {
+		"@type": "WebSite",
+		"@id": websiteId,
+		url: baseUrl,
+		name: siteName
+	};
+}
+
 export function buildService(url: string, placeName: string) {
 	return {
 		"@type": "Service",
 		"@id": `${url}#service`,
 		name: `Elektro pohotovost ${placeName} – elektrikář 24/7`,
 		serviceType: "Havarijní opravy elektro / elektrikář nonstop 24/7",
-		provider: { "@id": `${url}#business` },
+		provider: { "@id": businessId },
 		areaServed: { "@type": "Place", name: placeName }
 	};
 }
@@ -114,11 +122,7 @@ export function buildBlogPosting(params: {
 		datePublished,
 		dateModified,
 		author,
-		publisher: {
-			"@type": "Organization",
-			name: businessName,
-			url: baseUrl
-		}
+		publisher: { "@id": businessId }
 	};
 }
 
@@ -133,7 +137,7 @@ export function buildWebPage(params: {
 		"@id": `${url}#webpage`,
 		url,
 		name,
-		isPartOf: { "@id": `${baseUrl}#website` }
+		isPartOf: { "@id": websiteId }
 	};
 	if (description && description.trim()) page.description = description.trim();
 	return page;
@@ -147,6 +151,7 @@ export function graphForAreaPage(params: {
 }) {
 	const { url, area, breadcrumbs, faq } = params;
 	return [
+		buildWebSite(),
 		buildLocalBusiness(url, area.name),
 		buildService(url, area.name),
 		buildBreadcrumbList(url, breadcrumbs),
@@ -163,6 +168,7 @@ export function graphForLocationPage(params: {
 }) {
 	const { url, area, location, breadcrumbs, faq } = params;
 	return [
+		buildWebSite(),
 		buildLocalBusiness(url, area.name),
 		buildService(url, location.name),
 		buildBreadcrumbList(url, breadcrumbs),
@@ -179,6 +185,7 @@ export function graphForGenericPage(params: {
 }) {
 	const { url, placeName, areaServedName, breadcrumbs, faq = [] } = params;
 	const graph = [
+		buildWebSite(),
 		buildLocalBusiness(url, areaServedName),
 		buildService(url, placeName),
 		buildBreadcrumbList(url, breadcrumbs)
@@ -197,6 +204,7 @@ export function graphForLocationLandingPage(params: {
 }) {
 	const { url, placeName, pageName, pageDescription, breadcrumbs = [], faq } = params;
 	const graph = [
+		buildWebSite(),
 		buildLocalBusiness(url, placeName),
 		buildFaqPage(url, faq),
 		buildWebPage({ url, name: pageName, description: pageDescription })

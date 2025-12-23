@@ -17,7 +17,7 @@ export default async function BlogCategoriesIndexPage() {
 	const categories = await getAllCategories();
 
 	return (
-		<Section kicker="Blog" title="Kategorie" lead="Vyberte oblast, která se vás týká.">
+		<Section kicker="Blog" title="Kategorie" titleAs="h1" lead="Vyberte oblast, která se vás týká.">
 			<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 				{categories.map((c) => (
 					<a

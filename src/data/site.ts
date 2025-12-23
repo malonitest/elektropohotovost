@@ -17,10 +17,47 @@ export const googleBusinessProfileUrl =
 // (pro Next.js klientské použití lze použít i NEXT_PUBLIC_BASE_URL).
 const env = process.env as Record<string, string | undefined>;
 
-export const baseUrl = (
-	env.NEXT_PUBLIC_BASE_URL || env.PUBLIC_BASE_URL || "https://example.com"
-)
-	.replace(/\/$/, "") as string;
+const rawBaseUrl = (env.NEXT_PUBLIC_BASE_URL || env.PUBLIC_BASE_URL || "https://example.com").replace(
+	/\/$/,
+	""
+);
+
+function assertValidBaseUrlForBuild(value: string) {
+	if (process.env.NODE_ENV !== "production") return;
+
+	const fromEnv = Boolean(env.NEXT_PUBLIC_BASE_URL || env.PUBLIC_BASE_URL);
+	if (!fromEnv) {
+		throw new Error(
+			"Missing PUBLIC_BASE_URL (or NEXT_PUBLIC_BASE_URL). Static export bakes absolute canonicals/sitemap at build-time. Example: https://www.elektropohotovost24.cz"
+		);
+	}
+
+	if (value === "https://example.com") {
+		throw new Error(
+			"PUBLIC_BASE_URL/NEXT_PUBLIC_BASE_URL must not be https://example.com. Set it to your real domain, e.g. https://www.elektropohotovost24.cz"
+		);
+	}
+
+	let parsed: URL;
+	try {
+		parsed = new URL(value);
+	} catch {
+		throw new Error(
+			`PUBLIC_BASE_URL/NEXT_PUBLIC_BASE_URL must be a valid absolute URL (got: ${value}). Example: https://www.elektropohotovost24.cz`
+		);
+	}
+
+	const isLocalhost = parsed.hostname === "localhost" || parsed.hostname === "127.0.0.1";
+	if (!isLocalhost && parsed.protocol !== "https:") {
+		throw new Error(
+			`PUBLIC_BASE_URL/NEXT_PUBLIC_BASE_URL must use https in production (got: ${value}). Example: https://www.elektropohotovost24.cz`
+		);
+	}
+}
+
+assertValidBaseUrlForBuild(rawBaseUrl);
+
+export const baseUrl = rawBaseUrl as string;
 
 // Kontakty – bez vymyšlených údajů. Doplňte vlastní.
 export const phone = (env.NEXT_PUBLIC_PHONE || env.PUBLIC_PHONE || "774 621 763") as string;

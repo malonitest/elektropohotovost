@@ -25,6 +25,7 @@ export default async function BlogIndexPage() {
 			<Section
 				kicker="Blog"
 				title="Praktické návody a postupy"
+				titleAs="h1"
 				lead="Píšeme česky a z praxe. U havárií držíme bezpečný postup; u plánovaných prací řešíme domluvu a kvalitu."
 			>
 				<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

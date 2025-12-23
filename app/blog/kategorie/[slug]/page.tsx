@@ -36,7 +36,7 @@ export default async function BlogCategoryPage(props: { params: Promise<{ slug: 
 
 	return (
 		<>
-			<Section kicker="Blog" title={category.name} lead={category.short}>
+			<Section kicker="Blog" title={category.name} titleAs="h1" lead={category.short}>
 				<div className="grid gap-3">
 					{posts.map((p) => (
 						<a

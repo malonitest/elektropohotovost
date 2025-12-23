@@ -72,7 +72,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 		<>
 			<JsonLd graph={jsonLdGraph} />
 
-			<Section kicker={post.categoryName} title={post.title} lead={post.description}>
+			<Section kicker={post.categoryName} title={post.title} titleAs="h1" lead={post.description}>
 				<div className="flex flex-wrap items-center gap-3 text-sm text-text-muted">
 					<span>Publikováno: {post.publishedAt}</span>
 					<span aria-hidden>•</span>

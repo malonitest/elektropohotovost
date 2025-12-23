@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import { brandRegionText, siteName } from "../src/data/site";
 import { absoluteUrl } from "../src/lib/urls";
 import { graphForGenericPage } from "../src/lib/jsonld";
@@ -10,12 +12,24 @@ import PrimaryButton from "../src/components/ui/PrimaryButton";
 
 export const dynamic = "error";
 
-export default function HomePage() {
-	const canonical = absoluteUrl("/");
-	const title = `${siteName} | Elektrikář 24/7`;
-	const description =
-		"Elektro pohotovost 24/7 pro výpadky elektřiny, zkraty a poruchy rozvaděče. Výjezdy pro byty, domy i firmy v regionu Praha-západ a západní Praha.";
+const canonical = absoluteUrl("/");
+const title = `${siteName} | Elektrikář 24/7`;
+const description =
+	"Elektro pohotovost 24/7 pro výpadky elektřiny, zkraty a poruchy rozvaděče. Výjezdy pro byty, domy i firmy v regionu Praha-západ a západní Praha.";
 
+export const metadata: Metadata = {
+	title,
+	description,
+	alternates: { canonical },
+	openGraph: {
+		type: "website",
+		title,
+		description,
+		url: canonical
+	}
+};
+
+export default function HomePage() {
 	const jsonLdGraph = graphForGenericPage({
 		url: canonical,
 		placeName: "Elektro pohotovost",
