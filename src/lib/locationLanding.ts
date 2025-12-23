@@ -101,7 +101,7 @@ export function buildLocationLandingContent(params: {
 		callout:
 			"Ceník berte jako orientační rozsahy. Přesnou cenu upřesníme před zahájením práce podle situace, času a náročnosti.",
 		rows: [
-			{ label: "Výjezd + diagnostika", range: "1 400–2 900 Kč" },
+			{ label: "Výjezd + diagnostika", range: "2 500–3 500 Kč" },
 			{ label: "Práce elektrikáře", range: "700–1 300 Kč / hod" },
 			{ label: "Drobný materiál", range: "dle potřeby", note: "vždy po odsouhlasení" }
 		]
@@ -143,7 +143,7 @@ export function buildLocationLandingContent(params: {
 		{
 			question: "Kolik stojí výjezd?",
 			answer:
-				"Cena se liší podle času a situace. Orientačně výjezd + diagnostika 1 400–2 900 Kč. Před zahájením práce vždy sdělíme odhad a domluvíme postup."
+				"Cena se liší podle času a situace. Orientačně výjezd + diagnostika 2 500–3 500 Kč. Před zahájením práce vždy sdělíme odhad a domluvíme postup."
 		},
 		{
 			question: "Uděláte opravu hned na místě?",

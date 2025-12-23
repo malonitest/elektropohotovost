@@ -53,7 +53,7 @@ export default function CenikPage() {
 					<Card title="Výjezd a diagnostika">
 						<ul className="mt-3 space-y-2 text-text-secondary">
 							<li>
-								<b className="text-text-primary">Výjezd + diagnostika:</b> 1 400–2 900 Kč
+								<b className="text-text-primary">Výjezd + diagnostika:</b> 2 500–3 500 Kč
 							</li>
 							<li>
 								<b className="text-text-primary">Práce elektrikáře:</b> 700–1 300 Kč / hod
