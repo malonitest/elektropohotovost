@@ -2,6 +2,7 @@
 import Breadcrumbs from "../components/Breadcrumbs.astro";
 import Footer from "../components/Footer.astro";
 import JsonLd from "../components/JsonLd.astro";
+import { phone } from "../data/site";
 
 export type BreadcrumbItem = { name: string; url: string };
 
@@ -14,6 +15,7 @@ export type Props = {
 };
 
 const { title, description, canonical, breadcrumbs = [], jsonLdGraph = [] } = Astro.props;
+const phoneDigits = String(phone || "").replace(/\D+/g, "");
 ---
 <!doctype html>
 <html lang="cs">
@@ -36,6 +38,14 @@ const { title, description, canonical, breadcrumbs = [], jsonLdGraph = [] } = As
 		<link rel="preconnect" href={new URL(canonical).origin} />
 
 		<JsonLd graph={jsonLdGraph} />
+
+		<script type="text/javascript" is:inline>
+			(function(c,l,a,r,i,t,y){
+				c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+				t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+				y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+			})(window, document, "clarity", "script", "uu2c3wx4m1");
+		</script>
 
 		<style>
 			:root {
@@ -139,5 +149,34 @@ const { title, description, canonical, breadcrumbs = [], jsonLdGraph = [] } = As
 			<div class="hr" role="separator" />
 			<Footer />
 		</div>
+
+		<script is:inline>
+			(function(){
+				var mainPhoneDigits = "${phoneDigits}";
+				function normalizeDigits(value){ return String(value||"").replace(/\D+/g, ""); }
+				function extractTelDigits(href){
+					if(!href) return "";
+					href = String(href).trim();
+					if(href.toLowerCase().indexOf("tel:") !== 0) return "";
+					return normalizeDigits(href.slice(4));
+				}
+				document.addEventListener("click", function(e){
+					var target = e.target;
+					if(!target || !target.closest) return;
+					var a = target.closest("a");
+					if(!a) return;
+					var href = a.getAttribute("href") || "";
+					var clickedDigits = extractTelDigits(href);
+					if(!clickedDigits) return;
+					if(typeof window.clarity === "function"){
+						window.clarity("set", "call_phone", clickedDigits);
+						window.clarity("event", "tel_click");
+						if(mainPhoneDigits && clickedDigits === mainPhoneDigits){
+							window.clarity("event", "volete_774621763_click");
+						}
+					}
+				}, true);
+			})();
+		</script>
 	</body>
 </html>
