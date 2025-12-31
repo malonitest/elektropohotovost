@@ -6,6 +6,9 @@ out/
 # generated types
 .astro/
 
+# typescript incremental build info
+*.tsbuildinfo
+
 # dependencies
 node_modules/
 
