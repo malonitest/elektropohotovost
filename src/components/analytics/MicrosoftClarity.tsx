@@ -22,12 +22,16 @@ function extractTelDigitsFromHref(href: string) {
 
 export default function MicrosoftClarity({
 	clarityId,
-	phone
+	phone,
+	enabled
 }: {
 	clarityId: string;
 	phone: string;
+	enabled: boolean;
 }) {
 	const phoneDigits = useMemo(() => normalizeDigits(phone), [phone]);
+
+	if (!enabled) return null;
 
 	useEffect(() => {
 		if (!phoneDigits) return;

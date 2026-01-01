@@ -40,11 +40,28 @@ const phoneDigits = String(phone || "").replace(/\D+/g, "");
 		<JsonLd graph={jsonLdGraph} />
 
 		<script type="text/javascript" is:inline>
-			(function(c,l,a,r,i,t,y){
-				c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-				t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-				y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-			})(window, document, "clarity", "script", "uu2c3wx4m1");
+			(function(){
+				var CLARITY_ID = "uu2c3wx4m1";
+				function readCookie(name){
+					var match = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') + '=([^;]*)'));
+					return match ? decodeURIComponent(match[1]) : "";
+				}
+				function loadClarity(){
+					if (window.__clarityLoaded) return;
+					window.__clarityLoaded = true;
+					(function(c,l,a,r,i,t,y){
+						c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+						t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+						y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+					})(window, document, "clarity", "script", CLARITY_ID);
+				}
+
+				if (readCookie("analytics_consent") === "granted") {
+					loadClarity();
+				}
+
+				window.__loadClarity = loadClarity;
+			})();
 		</script>
 
 		<style>
@@ -150,15 +167,65 @@ const phoneDigits = String(phone || "").replace(/\D+/g, "");
 			<Footer />
 		</div>
 
-		<script is:inline>
+		<div id="consentBanner" style="display:none; position:fixed; left:0; right:0; bottom:0; z-index:9999; border-top:1px solid var(--line); background: rgba(16, 24, 36, 0.92); backdrop-filter: blur(10px);">
+			<div style="max-width: var(--max); margin: 0 auto; padding: 14px 16px; display:flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+				<div style="min-width: 240px; flex: 1;">
+					<div style="font-weight: 800;">Souhlas s analytikou</div>
+					<div style="color: var(--muted); font-size: 14px;">
+						Používáme Microsoft Clarity pro zlepšování webu. Povolením pomůžete měřit návštěvnost a kliknutí (např. na tlačítko volání).
+					</div>
+				</div>
+				<div style="display:flex; gap: 10px;">
+					<button id="consentDeny" class="btn btnSecondary" type="button">Odmítnout</button>
+					<button id="consentAllow" class="btn btnDanger" type="button">Povolit</button>
+				</div>
+			</div>
+		</div>
+
+		<script is:inline define:vars={{ phoneDigits }}>
 			(function(){
-				var mainPhoneDigits = "${phoneDigits}";
+				var mainPhoneDigits = phoneDigits;
+				var CONSENT_COOKIE = "analytics_consent";
+				var CONSENT_MAX_AGE = 15552000;
 				function normalizeDigits(value){ return String(value||"").replace(/\D+/g, ""); }
+				function readCookie(name){
+					var match = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&') + '=([^;]*)'));
+					return match ? decodeURIComponent(match[1]) : "";
+				}
+				function writeCookie(name, value){
+					document.cookie = name + "=" + encodeURIComponent(value) + "; Max-Age=" + CONSENT_MAX_AGE + "; Path=/; SameSite=Lax";
+				}
 				function extractTelDigits(href){
 					if(!href) return "";
 					href = String(href).trim();
 					if(href.toLowerCase().indexOf("tel:") !== 0) return "";
 					return normalizeDigits(href.slice(4));
+				}
+
+				function setupConsentBanner(){
+					var banner = document.getElementById("consentBanner");
+					if(!banner) return;
+					var current = readCookie(CONSENT_COOKIE);
+					if(current === "granted" || current === "denied") return;
+					banner.style.display = "block";
+
+					var allowBtn = document.getElementById("consentAllow");
+					var denyBtn = document.getElementById("consentDeny");
+					if(allowBtn){
+						allowBtn.addEventListener("click", function(){
+							writeCookie(CONSENT_COOKIE, "granted");
+							try { window.localStorage.setItem(CONSENT_COOKIE, "granted"); } catch(e) {}
+							if(typeof window.__loadClarity === "function") window.__loadClarity();
+							banner.style.display = "none";
+						});
+					}
+					if(denyBtn){
+						denyBtn.addEventListener("click", function(){
+							writeCookie(CONSENT_COOKIE, "denied");
+							try { window.localStorage.setItem(CONSENT_COOKIE, "denied"); } catch(e) {}
+							banner.style.display = "none";
+						});
+					}
 				}
 				document.addEventListener("click", function(e){
 					var target = e.target;
@@ -176,6 +243,8 @@ const phoneDigits = String(phone || "").replace(/\D+/g, "");
 						}
 					}
 				}, true);
+
+				setupConsentBanner();
 			})();
 		</script>
 	</body>

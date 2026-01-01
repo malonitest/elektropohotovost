@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import SiteFooter from "../src/components/ui/Footer";
-import MicrosoftClarity from "../src/components/analytics/MicrosoftClarity";
+import Analytics from "../src/components/analytics/Analytics";
 
 import { baseUrl, businessName, phone, serviceHours, siteName } from "../src/data/site";
 
@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="cs">
 			<body>
-				<MicrosoftClarity clarityId="uu2c3wx4m1" phone={phone} />
+				<Analytics clarityId="uu2c3wx4m1" phone={phone} />
 				<header className="siteHeader">
 					<div className="container-app">
 						<div className="siteNav">
