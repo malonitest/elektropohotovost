@@ -23,8 +23,12 @@ function writeCookie(name: string, value: string) {
 function readStoredConsent(): ConsentState {
 	if (typeof window === "undefined") return "unknown";
 
-	const fromLocalStorage = window.localStorage.getItem(CONSENT_KEY);
-	if (fromLocalStorage === "granted" || fromLocalStorage === "denied") return fromLocalStorage;
+	try {
+		const fromLocalStorage = window.localStorage.getItem(CONSENT_KEY);
+		if (fromLocalStorage === "granted" || fromLocalStorage === "denied") return fromLocalStorage;
+	} catch {
+		// ignore
+	}
 
 	const fromCookie = readCookie(CONSENT_COOKIE);
 	if (fromCookie === "granted" || fromCookie === "denied") return fromCookie;
