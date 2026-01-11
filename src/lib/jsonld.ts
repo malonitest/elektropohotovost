@@ -2,6 +2,7 @@ import type { Area } from "../data/areas";
 import type { Location } from "../data/locations";
 import { baseUrl, businessAddress, businessName, email, googleBusinessProfileUrl, phone, siteName } from "../data/site";
 import type { FaqItem } from "./content";
+import { absoluteUrl } from "./urls";
 
 export type BreadcrumbItem = { name: string; url: string };
 
@@ -32,6 +33,11 @@ export function buildLocalBusiness(url: string, areaServedName: string) {
 		name: businessName,
 		alternateName: siteName,
 		url: baseUrl,
+		image: [
+			absoluteUrl("/og-images/default.svg"),
+			absoluteUrl("/og-images/homepage.svg")
+		],
+		priceRange: "500 Kč - 5000 Kč",
 		address: {
 			"@type": "PostalAddress",
 			streetAddress: businessAddress.streetAddress,
@@ -39,13 +45,30 @@ export function buildLocalBusiness(url: string, areaServedName: string) {
 			postalCode: businessAddress.postalCode,
 			addressCountry: businessAddress.addressCountry
 		},
-		openingHoursSpecification: openingHoursSpecification()
+		geo: {
+			"@type": "GeoCoordinates",
+			latitude: "49.9167",
+			longitude: "14.1833"
+		},
+		areaServed: {
+			"@type": "GeoCircle",
+			geoMidpoint: {
+				"@type": "GeoCoordinates",
+				latitude: "50.0755",
+				longitude: "14.4378"
+			},
+			geoRadius: "50000"
+		},
+		openingHoursSpecification: openingHoursSpecification(),
+		paymentAccepted: "Cash, Card",
+		currenciesAccepted: "CZK"
 	};
 
 	if (typeof phone === "string" && phone.trim()) business.telephone = phone.trim();
 	if (typeof email === "string" && email.trim()) business.email = email.trim();
 	if (typeof googleBusinessProfileUrl === "string" && googleBusinessProfileUrl.trim()) {
 		business.sameAs = [googleBusinessProfileUrl.trim()];
+		business.hasMap = googleBusinessProfileUrl.trim();
 	}
 
 	return business;
@@ -60,14 +83,63 @@ export function buildWebSite() {
 	};
 }
 
+export function buildOrganization() {
+	const org: Record<string, unknown> = {
+		"@type": "Organization",
+		"@id": `${baseUrl}#organization`,
+		name: businessName,
+		url: baseUrl,
+		logo: {
+			"@type": "ImageObject",
+			url: absoluteUrl("/og-images/default.svg")
+		}
+	};
+
+	if (typeof phone === "string" && phone.trim()) org.telephone = phone.trim();
+	if (typeof email === "string" && email.trim()) org.email = email.trim();
+	if (typeof googleBusinessProfileUrl === "string" && googleBusinessProfileUrl.trim()) {
+		org.sameAs = [googleBusinessProfileUrl.trim()];
+	}
+
+	return org;
+}
+
 export function buildService(url: string, placeName: string) {
+	const phoneNumber = typeof phone === "string" ? phone.replace(/\s+/g, "") : "";
+	const formattedPhone = phoneNumber ? `+420${phoneNumber}` : "";
+
 	return {
 		"@type": "Service",
 		"@id": `${url}#service`,
 		name: `Elektro pohotovost ${placeName} – elektrikář 24/7`,
-		serviceType: "Havarijní opravy elektro / elektrikář nonstop 24/7",
+		description: "Havarijní opravy elektro, výpadky proudu, zkraty, jističe a chrániče. NONSTOP 24/7.",
+		image: absoluteUrl("/og-images/services.svg"),
+		serviceType: "Emergency Electrical Repair",
 		provider: { "@id": businessId },
-		areaServed: { "@type": "Place", name: placeName }
+		areaServed: { "@type": "Place", name: placeName },
+		offers: {
+			"@type": "Offer",
+			priceCurrency: "CZK",
+			price: "800",
+			priceSpecification: {
+				"@type": "UnitPriceSpecification",
+				price: "800",
+				priceCurrency: "CZK",
+				referenceQuantity: {
+					"@type": "QuantitativeValue",
+					value: "1",
+					unitText: "hour"
+				}
+			}
+		},
+		availableChannel: formattedPhone ? {
+			"@type": "ServiceChannel",
+			servicePhone: {
+				"@type": "ContactPoint",
+				telephone: formattedPhone,
+				availableLanguage: "cs"
+			}
+		} : undefined
 	};
 }
 
@@ -104,8 +176,11 @@ export function buildBlogPosting(params: {
 	dateModified: string;
 	authorName: string;
 	authorUrl?: string;
+	keywords?: string[];
+	categoryName?: string;
+	wordCount?: number;
 }) {
-	const { url, headline, description, datePublished, dateModified, authorName, authorUrl } = params;
+	const { url, headline, description, datePublished, dateModified, authorName, authorUrl, keywords, categoryName, wordCount } = params;
 
 	const author: Record<string, unknown> = {
 		"@type": "Organization",
@@ -113,17 +188,32 @@ export function buildBlogPosting(params: {
 	};
 	if (authorUrl && authorUrl.trim()) author.url = authorUrl.trim();
 
-	return {
+	const posting: Record<string, unknown> = {
 		"@type": "BlogPosting",
 		"@id": `${url}#post`,
 		mainEntityOfPage: { "@type": "WebPage", "@id": `${url}#webpage` },
 		headline,
 		description,
+		image: absoluteUrl("/og-images/blog.svg"),
 		datePublished,
 		dateModified,
 		author,
 		publisher: { "@id": businessId }
 	};
+
+	if (keywords && keywords.length > 0) {
+		posting.keywords = keywords;
+	}
+
+	if (categoryName && categoryName.trim()) {
+		posting.articleSection = categoryName.trim();
+	}
+
+	if (wordCount && wordCount > 0) {
+		posting.wordCount = wordCount;
+	}
+
+	return posting;
 }
 
 export function buildWebPage(params: {

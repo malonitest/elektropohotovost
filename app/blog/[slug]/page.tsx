@@ -68,6 +68,9 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 		.filter(Boolean)
 		.slice(0, 6);
 
+	// Calculate word count from content
+	const wordCount = post.content.split(/\s+/).filter(w => w.length > 0).length;
+
 	const jsonLdGraph: unknown[] = [
 		buildBreadcrumbList(canonical, [
 			{ name: "Domů", url: absoluteUrl("/") },
@@ -81,7 +84,10 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 			datePublished: post.publishedAt,
 			dateModified: post.updatedAt,
 			authorName: blogAuthor.name,
-			authorUrl: absoluteUrl(blogAuthor.url)
+			authorUrl: absoluteUrl(blogAuthor.url),
+			keywords: post.keywords,
+			categoryName: post.categoryName,
+			wordCount
 		})
 	];
 
