@@ -143,6 +143,34 @@ export function buildService(url: string, placeName: string) {
 	};
 }
 
+export function buildPlace(
+	location: { 
+		name: string; 
+		coordinates?: { latitude: number; longitude: number };
+	}, 
+	url: string
+) {
+	if (!location.coordinates) return null;
+
+	const place: Record<string, unknown> = {
+		"@type": "Place",
+		"@id": `${url}#place`,
+		name: location.name,
+		geo: {
+			"@type": "GeoCoordinates",
+			latitude: String(location.coordinates.latitude),
+			longitude: String(location.coordinates.longitude)
+		},
+		address: {
+			"@type": "PostalAddress",
+			addressLocality: location.name,
+			addressCountry: "CZ"
+		}
+	};
+
+	return place;
+}
+
 export function buildBreadcrumbList(url: string, items: BreadcrumbItem[]) {
 	return {
 		"@type": "BreadcrumbList",
@@ -291,14 +319,25 @@ export function graphForLocationLandingPage(params: {
 	pageDescription: string;
 	breadcrumbs?: BreadcrumbItem[];
 	faq: FaqItem[];
+	location?: { 
+		name: string; 
+		coordinates?: { latitude: number; longitude: number };
+	};
 }) {
-	const { url, placeName, pageName, pageDescription, breadcrumbs = [], faq } = params;
+	const { url, placeName, pageName, pageDescription, breadcrumbs = [], faq, location } = params;
 	const graph = [
 		buildWebSite(),
 		buildLocalBusiness(url, placeName),
 		buildFaqPage(url, faq),
 		buildWebPage({ url, name: pageName, description: pageDescription })
 	];
+	
+	// Add Place schema with GPS coordinates for location pages
+	if (location) {
+		const place = buildPlace(location, url);
+		if (place) graph.push(place);
+	}
+	
 	if (breadcrumbs.length) graph.push(buildBreadcrumbList(url, breadcrumbs));
 	return graph;
 }

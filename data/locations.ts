@@ -5,6 +5,10 @@ export type Location = {
 	name: string;
 	publish: boolean;
 	nearbySlugs: string[];
+	coordinates?: {
+		latitude: number;
+		longitude: number;
+	};
 };
 
 function normalizeName(value: string): string {
@@ -31,7 +35,8 @@ export const locations: Location[] = legacyLocations.map((loc) => {
 		slug: loc.slug,
 		name: loc.name,
 		publish: loc.publish,
-		nearbySlugs: Array.from(new Set(nearbySlugs)).slice(0, 8)
+		nearbySlugs: Array.from(new Set(nearbySlugs)).slice(0, 8),
+		coordinates: loc.coordinates
 	};
 });
 

@@ -6,6 +6,10 @@ export type LocationLandingContent = {
 	heroKicker: string;
 	heroTitle: string;
 	heroLead: string;
+	localPresence: {
+		title: string;
+		description: string;
+	};
 	safetyTitle: string;
 	safetyBody: string;
 	services: ReadonlyArray<string>;
@@ -49,6 +53,15 @@ export function buildLocationLandingContent(params: {
 		`Nonstop servis pro ${location.name}: výpadky proudu, zkraty, chrániče a rozvaděče. Nejdřív stabilizujeme situaci, pak dohledáme příčinu a navrhneme nejlepší bezpečné řešení.`,
 		`Elektro pohotovost v ${location.name} je pro situace, které nesnesou čekání. Pomůžeme rychle – a hlavně bezpečně – bez práce pod napětím a bez zbytečných slibů.`
 	] as const);
+
+	const localPresence = {
+		title: `Působíme v ${location.name}`,
+		description: pickVariant(location.slug + ":presence", [
+			`Elektro pohotovost v ${location.name} zajišťujeme každý den v roce, 24 hodin denně. Jsme místní elektrikáři, kteří znají specifika zdejších domů a bytů – od starších objektů až po moderní novostavby.`,
+			`V ${location.name} poskytujeme nonstop elektro pohotovost s rychlým příjezdem. Máme zkušenosti s různými typy objektů v této lokalitě – od rodinných domů přes bytové domy až po komerční prostory.`,
+			`Naše elektro pohotovost pokrývá ${location.name} a nejbližší okolí s dostupností 24/7. Znalost místních podmínek a rychlá reakce nám umožňují efektivně řešit i náročné havarijní situace.`
+		] as const)
+	};
 
 	const safetyTitle = "Bezpečnost na prvním místě";
 	const safetyBody =
@@ -182,6 +195,7 @@ export function buildLocationLandingContent(params: {
 		heroKicker,
 		heroTitle,
 		heroLead,
+		localPresence,
 		safetyTitle,
 		safetyBody,
 		services,

@@ -95,7 +95,8 @@ export default function LocationLandingPage({ params }: { params: { slug: string
 			{ name: "Lokality", url: absoluteUrl("/lokality/") },
 			{ name: loc.name, url: canonical }
 		],
-		faq: content.faq
+		faq: content.faq,
+		location: loc
 	});
 
 	return (
@@ -113,6 +114,12 @@ export default function LocationLandingPage({ params }: { params: { slug: string
 						<a className="btnSecondary" href="/kontakt/">Kontakt</a>
 					</div>
 					<p className="mt-3 text-sm text-text-muted">Dostupnost {serviceHours}. Dojezd upřesníme po telefonu.</p>
+				</div>
+
+				<div className="mt-8">
+					<Card title={content.localPresence.title}>
+						<p className="mt-2 text-text-secondary">{content.localPresence.description}</p>
+					</Card>
 				</div>
 
 				<div className="mt-6">

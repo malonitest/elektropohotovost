@@ -9,6 +9,10 @@ export type Location = {
 	priority: 1 | 2 | 3;
 	publish: boolean;
 	microContextTags?: string[];
+	coordinates?: {
+		latitude: number;
+		longitude: number;
+	};
 };
 
 // Pozn.: Jedna lokalita patří jen do jedné oblasti (např. Loděnice je pouze v Berounsku).
@@ -22,7 +26,8 @@ export const locations: Location[] = [
 		nearby: ["Radotín", "Mokropsy", "Všenory", "Dobřichovice"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["rodinne-domy", "garaze", "zahrady", "firmy"]
+		microContextTags: ["rodinne-domy", "garaze", "zahrady", "firmy"],
+		coordinates: { latitude: 49.9606, longitude: 14.3175 }
 	},
 	{
 		name: "Dobřichovice",
@@ -32,7 +37,8 @@ export const locations: Location[] = [
 		nearby: ["Černošice", "Všenory", "Lety", "Řevnice"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["rodinne-domy", "pripojky", "rozvadec", "dilny"]
+		microContextTags: ["rodinne-domy", "pripojky", "rozvadec", "dilny"],
+		coordinates: { latitude: 49.9258, longitude: 14.2814 }
 	},
 	{
 		name: "Řevnice",
@@ -42,7 +48,8 @@ export const locations: Location[] = [
 		nearby: ["Dobřichovice", "Lety", "Všenory", "Vonoklasy"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["rodinne-domy", "chaty", "rozvadec", "firmy"]
+		microContextTags: ["rodinne-domy", "chaty", "rozvadec", "firmy"],
+		coordinates: { latitude: 49.9119, longitude: 14.2381 }
 	},
 	{
 		name: "Roztoky",
@@ -52,7 +59,8 @@ export const locations: Location[] = [
 		nearby: ["Suchdol", "Horoměřice", "Kněževes", "Praha 6"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["bytove-domy", "rodinne-domy", "firmy"]
+		microContextTags: ["bytove-domy", "rodinne-domy", "firmy"],
+		coordinates: { latitude: 50.1578, longitude: 14.3989 }
 	},
 	{
 		name: "Hostivice",
@@ -62,7 +70,8 @@ export const locations: Location[] = [
 		nearby: ["Chýně", "Jeneč", "Ruzyně", "Zličín"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["rodinne-domy", "prumysl", "firmy"]
+		microContextTags: ["rodinne-domy", "prumysl", "firmy"],
+		coordinates: { latitude: 50.0811, longitude: 14.2603 }
 	},
 	{
 		name: "Rudná",
@@ -72,7 +81,8 @@ export const locations: Location[] = [
 		nearby: ["Nučice", "Chýně", "Zbuzany", "Praha 5"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["rodinne-domy", "firmy", "dilny"]
+		microContextTags: ["rodinne-domy", "firmy", "dilny"],
+		coordinates: { latitude: 49.9850, longitude: 14.2461 }
 	},
 	{
 		name: "Jesenice",
@@ -82,7 +92,8 @@ export const locations: Location[] = [
 		nearby: ["Vestec", "Psáry", "Průhonice", "Zvole"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["rodinne-domy", "novostavby", "pripojky"]
+		microContextTags: ["rodinne-domy", "novostavby", "pripojky"],
+		coordinates: { latitude: 49.9647, longitude: 14.5228 }
 	},
 	{
 		name: "Jílové u Prahy",
@@ -102,7 +113,8 @@ export const locations: Location[] = [
 		nearby: ["Líšno", "Čisovice", "Kytín", "Řevnice"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["rodinne-domy", "chaty", "garaze"]
+		microContextTags: ["rodinne-domy", "chaty", "garaze"],
+		coordinates: { latitude: 49.8669, longitude: 14.2658 }
 	},
 	{
 		name: "Psáry",
@@ -324,7 +336,8 @@ export const locations: Location[] = [
 		nearby: ["Smíchov", "Košíře", "Radlice", "Barrandov"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["bytove-domy", "spolecne-prostory", "firmy"]
+		microContextTags: ["bytove-domy", "spolecne-prostory", "firmy"],
+		coordinates: { latitude: 50.0753, longitude: 14.4017 }
 	},
 	{
 		name: "Smíchov",
@@ -334,7 +347,8 @@ export const locations: Location[] = [
 		nearby: ["Anděl", "Radlice", "Košíře", "Praha 5"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["bytove-domy", "kancelare", "provozovny"]
+		microContextTags: ["bytove-domy", "kancelare", "provozovny"],
+		coordinates: { latitude: 50.0706, longitude: 14.4031 }
 	},
 	{
 		name: "Košíře",
@@ -374,7 +388,8 @@ export const locations: Location[] = [
 		nearby: ["Dejvice", "Břevnov", "Vokovice", "Ruzyně"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["bytove-domy", "spolecne-prostory", "instituce"]
+		microContextTags: ["bytove-domy", "spolecne-prostory", "instituce"],
+		coordinates: { latitude: 50.0975, longitude: 14.3911 }
 	},
 	{
 		name: "Dejvice",
@@ -384,7 +399,8 @@ export const locations: Location[] = [
 		nearby: ["Hradčany", "Bubeneč", "Praha 6", "Vokovice"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["bytove-domy", "kancelare", "instituce"]
+		microContextTags: ["bytove-domy", "kancelare", "instituce"],
+		coordinates: { latitude: 50.0997, longitude: 14.3917 }
 	},
 	{
 		name: "Břevnov",
@@ -394,7 +410,8 @@ export const locations: Location[] = [
 		nearby: ["Střešovice", "Dejvice", "Vokovice", "Motol"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["bytove-domy", "spolecne-prostory"]
+		microContextTags: ["bytove-domy", "spolecne-prostory"],
+		coordinates: { latitude: 50.0864, longitude: 14.3828 }
 	},
 	{
 		name: "Vokovice",
@@ -526,7 +543,8 @@ export const locations: Location[] = [
 		nearby: ["Králův Dvůr", "Tetín", "Zdice", "Loděnice"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["bytove-domy", "rodinne-domy", "firmy"]
+		microContextTags: ["bytove-domy", "rodinne-domy", "firmy"],
+		coordinates: { latitude: 49.9639, longitude: 14.0719 }
 	},
 	{
 		name: "Králův Dvůr",
@@ -536,7 +554,8 @@ export const locations: Location[] = [
 		nearby: ["Beroun", "Zdice", "Tetín", "Loděnice"],
 		priority: 1,
 		publish: true,
-		microContextTags: ["rodinne-domy", "firmy"]
+		microContextTags: ["rodinne-domy", "firmy"],
+		coordinates: { latitude: 49.9503, longitude: 14.0278 }
 	},
 	{
 		name: "Zdice",
