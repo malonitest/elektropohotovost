@@ -9,6 +9,7 @@ import JsonLd from "../src/components/ui/JsonLd";
 import Section from "../src/components/ui/Section";
 import Card from "../src/components/ui/Card";
 import PrimaryButton from "../src/components/ui/PrimaryButton";
+import GoogleReviews from "../src/components/GoogleReviews";
 
 export const dynamic = "error";
 
@@ -95,6 +96,10 @@ export default function HomePage() {
 						</p>
 					</Card>
 				</div>
+			</section>
+
+			<section className="section">
+				<GoogleReviews />
 			</section>
 
 			<Section kicker="Lokality" title="Kde vyjíždíme" lead="Vyberte lokalitu – každá stránka má vlastní postup, ceny a kontakty.">

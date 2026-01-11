@@ -4,6 +4,7 @@ import Card from "../../src/components/ui/Card";
 import PrimaryButton from "../../src/components/ui/PrimaryButton";
 import SafetyAlert from "../../src/components/ui/SafetyAlert";
 import JsonLd from "../../src/components/ui/JsonLd";
+import GoogleReviews from "../../src/components/GoogleReviews";
 
 import {
 	businessAddress,
@@ -137,6 +138,10 @@ export default function ContactPage() {
 						nepoužívejte postižené zařízení a zavolejte. V případě viditelného kouře/požáru volejte 150/112.
 					</SafetyAlert>
 				</div>
+			</section>
+
+			<section className="section">
+				<GoogleReviews />
 			</section>
 		</>
 	);
