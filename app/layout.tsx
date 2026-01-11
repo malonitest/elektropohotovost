@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import SiteFooter from "../src/components/ui/Footer";
+import MobileMenu from "../src/components/ui/MobileMenu";
 import Analytics from "../src/components/analytics/Analytics";
 
 import { baseUrl, businessName, phone, serviceHours, siteName } from "../src/data/site";
@@ -54,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 								<a className="navLink" href="/cenik/">Ceník</a>
 								<a className="navLink" href="/kontakt/">Kontakt</a>
 							</nav>
+							<MobileMenu telHref={telHref} phoneLabel={phone} />
 							{telHref ? (
 								<a className="btnPrimary hidden sm:inline-flex" href={telHref}>
 									Volejte: {phone}
