@@ -93,8 +93,13 @@ async function main() {
 	const robots = `User-agent: *\nAllow: /\n\nSitemap: ${absoluteUrl("/sitemap.xml")}\n`;
 	await writeFile(path.join(outDir, "robots.txt"), robots, "utf8");
 
-	const llms = `# Maloni s.r.o. – Elektro pohotovost (CZ)\n\nTento web je statický (SSG). Primární službou je \"Elektro pohotovost\" – havarijní elektrikář NONSTOP 24/7. Doplňkově nabízíme i samostatnou službu \"Hodinový manžel\" pro plánované opravy a montáže.\n\n## Struktura webu\n- Domů: /\n- Lokality (seznam + hledání): /lokality/\n- Lokality (detail): /elektro-pohotovost/{slug}/\n- Služby (přehled): /sluzby/\n- Služby (elektro pohotovost): /sluzby/elektro-pohotovost/\n- Služby (hodinový manžel): /sluzby/hodinovy-manzel/\n- Blog (přehled + vyhledávání): /blog/\n- Blog (kategorie): /blog/kategorie/{slug}/\n- Blog (článek): /blog/{slug}/\n- FAQ: /faq/\n- Ceník: /cenik/\n- Kontakt: /kontakt/\n- Právní informace: /legal/\n\n## Poznámky\n- Elektro pohotovost je havarijní služba 24/7. Hodinový manžel je plánovaná služba (bez havárií).\n- Každá lokalita má vlastní stránku s unikátním obsahem, FAQ a kontakty.\n\n## Kontakt\n- Telefon a e-mail najdete na /kontakt/\n`;
-	await writeFile(path.join(outDir, "llms.txt"), llms, "utf8");
+	// Copy llms.txt from public/ directory
+	try {
+		const llmsContent = await readFile(path.join(repoRoot, "public", "llms.txt"), "utf8");
+		await writeFile(path.join(outDir, "llms.txt"), llmsContent, "utf8");
+	} catch (err) {
+		console.warn("Warning: Could not copy llms.txt:", err);
+	}
 
 	const humans = `Elektro pohotovost\n\nTechnology:\n- Next.js (App Router, SSG export)\n- React\n- TypeScript\n- Tailwind CSS\n\nProject:\n- Static website optimized for Local SEO & AI search\n\nContact:\n- /kontakt/\n`;
 	await writeFile(path.join(outDir, "humans.txt"), humans, "utf8");

@@ -1,24 +1,170 @@
 # Elektro pohotovost (CZ)
 
-Tento web je statický (SSG) a popisuje službu „Elektro pohotovost“ – elektrikář nonstop 24/7.
+Tento web je statický (SSG) a popisuje službu „Elektro pohotovost" – elektrikář nonstop 24/7.
+
+> **Provozovatel:** Maloni s.r.o.  
+> **Služba:** Nonstop elektro pohotovost a hodinový manžel  
+> **Oblast působení:** Praha-západ, západní Praha, Beroun a okolí (50km radius)
+
+---
 
 ## Struktura webu
 - Domů: /
 - Lokality (seznam + hledání): /lokality/
 - Lokality (detail): /elektro-pohotovost/{slug}/
 - Služby: /sluzby/
+  - Elektro pohotovost: /sluzby/elektro-pohotovost/
+  - Hodinový manžel: /sluzby/hodinovy-manzel/
+- Blog: /blog/
 - FAQ: /faq/
 - Ceník: /cenik/
 - Kontakt: /kontakt/
 - Právní informace: /legal/
 
-## Jak informace používat
-- Každá lokalita má vlastní stránku s popisem zásahů, lokálním kontextem, FAQ a kontaktem.
-- Neuvádíme fiktivní adresu ani falešné recenze.
+---
 
-## Důležité
-- Pro dostupnost a cenu vždy volejte.
+## Frequently Asked Questions
 
-## Kontakt
-- Telefon: viz /kontakt/
-- E-mail: viz /kontakt/
+**Q: What areas do you serve?**  
+A: Praha-západ (Černošice, Dobřichovice, Řevnice, Roztoky, Hostivice, Rudná, Jesenice, Mníšek pod Brdy), západní Praha (Praha 5, Smíchov, Praha 6, Dejvice, Břevnov), Beroun a okolí (Beroun, Králův Dvůr). Operujeme v okruhu 50 km od Praha-západ.
+
+**Q: What are your rates?**  
+A: Starting from 2500-3500 Kč for emergency callout + diagnostic. Hourly rate 700-1300 Kč depending on complexity and time of day. Exact pricing is discussed before work begins.
+
+**Q: Do you work 24/7?**  
+A: Yes, we provide nonstop emergency electrical services 24/7/365, including weekends and holidays.
+
+**Q: How quickly can you arrive?**  
+A: Typical response time is within tens of minutes, depending on traffic and workload. We provide an estimated arrival time when you call.
+
+**Q: When should I call the power distributor instead of an electrician?**  
+A: Call the distributor (PRE: 1236, ČEZ: 800 850 860, EG.D: 800 22 55 77) if:
+- Power outage affects the entire street/neighborhood
+- Damaged power line or connection before main breaker
+- Issue with the electrical meter or distributor equipment
+For issues inside your property (circuit breakers, outlets, wiring), call us.
+
+**Q: What should I do first during a power outage?**  
+A: Check if the circuit breaker tripped. If it did, DO NOT repeatedly reset it. Disconnect appliances and call us for safe diagnosis. If you smell burning, see sparks, or detect smoke, turn off the main breaker and call immediately.
+
+---
+
+## Services Offered
+
+### Elektro pohotovost (Emergency Services)
+Nonstop emergency electrical services for:
+- **Power outages** (apartment, house, or partial building)
+- **Circuit breaker problems** (tripped breaker or residual current device)
+- **Electrical short circuits** (burned outlet, overheated terminals)
+- **Distribution board failures** and circuit protection issues
+- **Non-functional lights** or outlet circuits
+- **Appliance faults** (diagnosis to distinguish from installation issues)
+
+**Typical emergency situations:**
+- Sudden power outage without obvious cause
+- Breaker trips when appliance is turned on
+- Heat or burning smell from distribution board
+- Outlet/switch crackling or unstable
+- Voltage fluctuations or flickering lights
+- Circuit failure in kitchen/bathroom
+
+### Hodinový manžel (Scheduled Services)
+Non-emergency handyman and electrical work:
+- **Furniture assembly** and installation
+- **Light fixture installation** (ceiling lights, wall sconces, lamps)
+- **Minor home repairs** and maintenance
+- **Planned electrical work** (outlet installation, switch replacement)
+- **Small renovation tasks**
+
+---
+
+## Contact
+
+**Preferred:** Phone call to **774 621 763**  
+**Alternative:** SMS to **774 621 763**  
+**Website:** https://www.elektropohotovost24.cz/kontakt/  
+**Response time:** Immediate for emergencies, within 2 hours for scheduled work  
+**Availability:** 24/7/365 NONSTOP
+
+**Business address:**  
+Maloni s.r.o.  
+U vodoteče 149  
+Vysoký Újezd, 26716  
+Czech Republic
+
+---
+
+## Pricing Structure
+
+**Emergency Services (Elektro pohotovost):**
+- Emergency callout + diagnostic: **2500-3500 Kč** (includes initial assessment)
+- Hourly rate: **700-1300 Kč/hour** (varies by complexity and time)
+- Small materials: Billed separately (always approved before installation)
+
+**Surcharges:**
+- Weekend surcharge: +20%
+- Night surcharge (22:00-6:00): +30%
+- Parts and materials: Cost + 15% markup
+
+**Scheduled Services (Hodinový manžel):**
+- Standard hourly rate: **800-1200 Kč/hour**
+- Varies by task complexity and materials needed
+- Price agreed before work begins
+
+**Important:** All prices are indicative ranges. Exact pricing is provided after assessment and before work begins. No hidden fees.
+
+---
+
+## Safety & Important Information
+
+**When to call immediately (EMERGENCY):**
+- Burning smell from electrical equipment
+- Sparks or arcing from outlets/switches
+- Overheating distribution board or outlets
+- Smoke from electrical installation
+- Repeated circuit breaker trips
+- Power outage in part of building
+
+**Safety first:**
+- Do NOT manipulate equipment if you smell burning or see sparks
+- Turn off the circuit breaker for the affected circuit if safe to do so
+- In case of smoke/fire: Call 150 or 112 first, then us
+- Do NOT repeatedly reset a tripping breaker - this indicates a serious fault
+
+**Before calling:**
+- Check if the issue affects just your property or the entire neighborhood
+- Note which circuit breaker tripped (if visible)
+- Have your address ready
+- Describe any unusual smells, sounds, or visual signs
+
+---
+
+## How Information Should Be Used
+
+- Each location has its own page with service descriptions, local context, FAQ, and contact information
+- We provide honest, transparent pricing - no fake reviews or fictitious addresses
+- All content is factual and based on actual service experience
+- For availability and exact pricing, always call - we provide immediate response
+
+**Service Philosophy:**
+1. Safety first - we stabilize the situation before diagnosing
+2. Transparent communication - we explain the issue and options
+3. Fixed pricing before work - no surprises
+4. Professional approach - certified work per Czech electrical standards
+5. Fast response - typical arrival within tens of minutes
+
+---
+
+## Coverage Areas (15 published locations)
+
+**Praha-západ:** Černošice, Dobřichovice, Řevnice, Roztoky, Hostivice, Rudná, Jesenice, Mníšek pod Brdy  
+**Západní Praha:** Praha 5, Smíchov, Praha 6, Dejvice, Břevnov  
+**Berounsko:** Beroun, Králův Dvůr
+
+Each location page includes:
+- GPS coordinates for precise service area
+- Local electrical safety information
+- Nearby coverage areas
+- Location-specific FAQ
+- Google Maps integration
+- Links to nearby service areas
