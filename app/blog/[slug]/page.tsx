@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 
 import Section from "../../../src/components/ui/Section";
 import JsonLd from "../../../src/components/ui/JsonLd";
+import TableOfContents from "../../../src/components/blog/TableOfContents";
 
 import { mdxComponents } from "../../../src/components/blog/MdxComponents";
 
@@ -48,7 +49,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 			description: post.description,
 			url: canonical,
 			images: [{
-				url: "/og-images/blog.svg",
+				url: post.featuredImage || "/og-images/blog.svg",
 				width: 1200,
 				height: 630,
 				alt: post.title
@@ -61,7 +62,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 			card: "summary_large_image",
 			title: post.title,
 			description: post.description,
-			images: ["/og-images/blog.svg"]
+			images: [post.featuredImage || "/og-images/blog.svg"]
 		}
 	};
 }
@@ -98,7 +99,8 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 			authorUrl: absoluteUrl(blogAuthor.url),
 			keywords: post.keywords,
 			categoryName: post.categoryName,
-			wordCount
+			wordCount,
+			featuredImage: post.featuredImage
 		})
 	];
 
@@ -167,6 +169,7 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 				</div>
 
 				<div className="mt-8 card cardPad">
+					{wordCount > 500 && <TableOfContents />}
 					<article className="prose max-w-none">
 						<MDXRemote
 							source={post.content}

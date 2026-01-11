@@ -19,6 +19,7 @@ export type BlogFrontmatter = {
 	relatedSlugs?: string[];
 	faq?: Array<{ question: string; answer: string }>;
 	keywords?: string[];
+	featuredImage?: string;
 };
 
 export type BlogPost = BlogFrontmatter & {

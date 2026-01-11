@@ -281,8 +281,9 @@ export function buildBlogPosting(params: {
 	keywords?: string[];
 	categoryName?: string;
 	wordCount?: number;
+	featuredImage?: string;
 }) {
-	const { url, headline, description, datePublished, dateModified, authorName, authorUrl, keywords, categoryName, wordCount } = params;
+	const { url, headline, description, datePublished, dateModified, authorName, authorUrl, keywords, categoryName, wordCount, featuredImage } = params;
 
 	const author: Record<string, unknown> = {
 		"@type": "Organization",
@@ -296,7 +297,7 @@ export function buildBlogPosting(params: {
 		mainEntityOfPage: { "@type": "WebPage", "@id": `${url}#webpage` },
 		headline,
 		description,
-		image: absoluteUrl("/og-images/blog.svg"),
+		image: featuredImage ? absoluteUrl(featuredImage) : absoluteUrl("/og-images/blog.svg"),
 		datePublished,
 		dateModified,
 		author,
