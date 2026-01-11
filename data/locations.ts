@@ -9,6 +9,7 @@ export type Location = {
 		latitude: number;
 		longitude: number;
 	};
+	lastUpdated?: string; // Date when pricing/info was last verified (YYYY-MM-DD)
 };
 
 function normalizeName(value: string): string {
@@ -36,7 +37,8 @@ export const locations: Location[] = legacyLocations.map((loc) => {
 		name: loc.name,
 		publish: loc.publish,
 		nearbySlugs: Array.from(new Set(nearbySlugs)).slice(0, 8),
-		coordinates: loc.coordinates
+		coordinates: loc.coordinates,
+		lastUpdated: "2026-01-11" // Set initial update date for all locations
 	};
 });
 

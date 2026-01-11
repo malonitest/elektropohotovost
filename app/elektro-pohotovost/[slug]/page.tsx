@@ -108,6 +108,16 @@ export default function LocationLandingPage({ params }: { params: { slug: string
 					<div className="sectionKicker">{content.heroKicker}</div>
 					<h1 className="sectionTitle">{content.heroTitle}</h1>
 					<p className="sectionLead">{content.heroLead}</p>
+					{loc.lastUpdated && (
+						<div className="mt-3 flex items-center gap-2 text-sm">
+							<svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+							</svg>
+							<span className="text-text-muted">
+								Ceník a dostupnost ověřeny: <span className="font-semibold text-primary">{new Date(loc.lastUpdated).toLocaleDateString('cs-CZ', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+							</span>
+						</div>
+					)}
 					<div className="mt-6 flex flex-wrap gap-3">
 						<PrimaryButton href={telHref}>Volejte: {phone}</PrimaryButton>
 						<a className="btnSecondary" href={smsHref}>SMS</a>

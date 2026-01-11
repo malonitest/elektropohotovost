@@ -162,10 +162,20 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 			<JsonLd graph={jsonLdGraph} />
 
 			<Section kicker={post.categoryName} title={post.title} titleAs="h1" lead={post.description}>
-				<div className="flex flex-wrap items-center gap-3 text-sm text-text-muted">
-					<span>Publikováno: {post.publishedAt}</span>
-					<span aria-hidden>•</span>
-					<span>Aktualizace: {post.updatedAt}</span>
+				<div className="flex flex-wrap items-center gap-4 text-sm">
+					<div className="flex items-center gap-2 text-text-muted">
+						<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+						</svg>
+						<span>Publikováno: {post.publishedAt}</span>
+					</div>
+					<span className="text-text-muted" aria-hidden>•</span>
+					<div className="flex items-center gap-2">
+						<svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+						</svg>
+						<span className="font-semibold text-primary">Aktualizováno: {post.updatedAt}</span>
+					</div>
 				</div>
 
 				<div className="mt-8 card cardPad">
