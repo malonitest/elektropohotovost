@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg12" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg12)"/>
+  <rect x="0" y="0" width="1200" height="630" fill="rgba(0,0,0,0.3)"/>
+  
+  <!-- Title -->
+  <text x="600" y="260" font-family="Arial, sans-serif" font-size="56" font-weight="bold" fill="white" text-anchor="middle">
+    <tspan x="600" dy="0">Příprava na</tspan>
+    <tspan x="600" dy="70">hodinového manžela</tspan>
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="400" font-family="Arial, sans-serif" font-size="32" fill="rgba(255,255,255,0.9)" text-anchor="middle">
+    <tspan x="600" dy="0">Co si ujasnit předem</tspan>
+  </text>
+  
+  <!-- Branding -->
+  <text x="600" y="560" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">
+    Hodinový manžel • 774 621 763
+  </text>
+</svg>
