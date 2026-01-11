@@ -13,7 +13,23 @@ export const metadata: Metadata = {
 		template: `%s | ${siteName}`
 	},
 	description: "Elektro pohotovost NONSTOP 24/7 – havarijní elektrikář.",
-	metadataBase: new URL(baseUrl)
+	metadataBase: new URL(baseUrl),
+	openGraph: {
+		type: "website",
+		siteName: siteName,
+		images: [{
+			url: "/og-images/default.svg",
+			width: 1200,
+			height: 630,
+			alt: "Elektro pohotovost 24/7"
+		}]
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: siteName,
+		description: "Elektro pohotovost NONSTOP 24/7 – havarijní elektrikář.",
+		images: ["/og-images/default.svg"]
+	}
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

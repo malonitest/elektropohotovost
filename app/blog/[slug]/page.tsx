@@ -30,7 +30,28 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 	return {
 		title: post.title,
 		description: post.description,
-		alternates: { canonical }
+		alternates: { canonical },
+		openGraph: {
+			type: "article",
+			title: post.title,
+			description: post.description,
+			url: canonical,
+			images: [{
+				url: "/og-images/blog.svg",
+				width: 1200,
+				height: 630,
+				alt: post.title
+			}],
+			publishedTime: post.publishedAt,
+			modifiedTime: post.updatedAt || post.publishedAt,
+			authors: [blogAuthor.name]
+		},
+		twitter: {
+			card: "summary_large_image",
+			title: post.title,
+			description: post.description,
+			images: ["/og-images/blog.svg"]
+		}
 	};
 }
 

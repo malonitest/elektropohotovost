@@ -23,7 +23,25 @@ export const metadata: Metadata = {
 	title: `Kontakt | ${siteName}`,
 	description:
 		"Kontakt na Maloni s.r.o. – Elektro pohotovost NONSTOP 24/7. Volejte pro dostupnost, dojezd a orientační cenu.",
-	alternates: { canonical: absoluteUrl("/kontakt/") }
+	alternates: { canonical: absoluteUrl("/kontakt/") },
+	openGraph: {
+		type: "website",
+		title: `Kontakt | ${siteName}`,
+		description: "Kontakt na Maloni s.r.o. – Elektro pohotovost NONSTOP 24/7. Volejte pro dostupnost, dojezd a orientační cenu.",
+		url: absoluteUrl("/kontakt/"),
+		images: [{
+			url: "/og-images/default.svg",
+			width: 1200,
+			height: 630,
+			alt: "Kontakt - Elektro pohotovost 24/7"
+		}]
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: `Kontakt | ${siteName}`,
+		description: "Kontakt na Maloni s.r.o. – Elektro pohotovost NONSTOP 24/7. Volejte pro dostupnost, dojezd a orientační cenu.",
+		images: ["/og-images/default.svg"]
+	}
 };
 
 export default function ContactPage() {

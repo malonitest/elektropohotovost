@@ -21,7 +21,23 @@ export const metadata: Metadata = {
 		description:
 			"Zásady ochrany osobních údajů (GDPR) a obchodní podmínky pro elektro pohotovost 24/7.",
 		type: "website",
-		url: canonical
+		url: canonical,
+		images: [{
+			url: "/og-images/default.svg",
+			width: 1200,
+			height: 630,
+			alt: "Právní informace - Elektro pohotovost 24/7"
+		}]
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: `Právní informace | ${siteName}`,
+		description: "Zásady ochrany osobních údajů (GDPR) a obchodní podmínky pro elektro pohotovost 24/7.",
+		images: ["/og-images/default.svg"]
+	},
+	robots: {
+		index: false,
+		follow: true
 	}
 };
 

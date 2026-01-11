@@ -20,7 +20,19 @@ export const metadata: Metadata = {
 		description:
 			"Seznam lokalit pro elektro pohotovost 24/7. Vyhledejte svou obec/městskou část a otevřete detail s postupem, ceníkem a kontakty.",
 		type: "website",
-		url: absoluteUrl("/lokality/")
+		url: absoluteUrl("/lokality/"),
+		images: [{
+			url: "/og-images/default.svg",
+			width: 1200,
+			height: 630,
+			alt: "Lokality - Elektro pohotovost 24/7"
+		}]
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: `Lokality | ${siteName}`,
+		description: "Seznam lokalit pro elektro pohotovost 24/7. Vyhledejte svou obec/městskou část a otevřete detail s postupem, ceníkem a kontakty.",
+		images: ["/og-images/default.svg"]
 	}
 };
 

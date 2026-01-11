@@ -23,7 +23,19 @@ export const metadata: Metadata = {
 		description:
 			"Plánované opravy a montáže s profesionálním přístupem. Hodinový manžel pro domácnosti i byty v regionu Praha, Praha-západ a Beroun.",
 		type: "website",
-		url: canonical
+		url: canonical,
+		images: [{
+			url: "/og-images/services.svg",
+			width: 1200,
+			height: 630,
+			alt: "Hodinový manžel - Opravy a montáže"
+		}]
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: `Hodinový manžel – opravy a montáže | ${siteName}`,
+		description: "Plánované opravy a montáže s professionálním přístupem. Hodinový manžel pro domácnosti i byty.",
+		images: ["/og-images/services.svg"]
 	}
 };
 

@@ -21,7 +21,19 @@ export const metadata: Metadata = {
 		description:
 			"Časté dotazy k elektro pohotovosti 24/7: dojezd, ceny, jističe/chrániče, bezpečnost a kdy volat distributora.",
 		type: "website",
-		url: canonical
+		url: canonical,
+		images: [{
+			url: "/og-images/default.svg",
+			width: 1200,
+			height: 630,
+			alt: "FAQ - Elektro pohotovost 24/7"
+		}]
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: `FAQ | ${siteName}`,
+		description: "Časté dotazy k elektro pohotovosti 24/7: dojezd, ceny, jističe/chrániče, bezpečnost a kdy volat distributora.",
+		images: ["/og-images/default.svg"]
 	}
 };
 

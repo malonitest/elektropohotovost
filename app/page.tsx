@@ -25,7 +25,19 @@ export const metadata: Metadata = {
 		type: "website",
 		title,
 		description,
-		url: canonical
+		url: canonical,
+		images: [{
+			url: "/og-images/homepage.svg",
+			width: 1200,
+			height: 630,
+			alt: "Elektro pohotovost 24/7 - Elektrikář Praha-západ, Beroun"
+		}]
+	},
+	twitter: {
+		card: "summary_large_image",
+		title,
+		description,
+		images: ["/og-images/homepage.svg"]
 	}
 };
 

@@ -35,7 +35,19 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 			title: `${title} | ${siteName}`,
 			description,
 			type: "website",
-			url: canonical
+			url: canonical,
+			images: [{
+				url: "/og-images/default.svg",
+				width: 1200,
+				height: 630,
+				alt: `Elektro pohotovost ${loc.name} - Elektrikář 24/7`
+			}]
+		},
+		twitter: {
+			card: "summary_large_image",
+			title: `${title} | ${siteName}`,
+			description,
+			images: ["/og-images/default.svg"]
 		}
 	};
 }

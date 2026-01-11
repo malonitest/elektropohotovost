@@ -1,0 +1,38 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0B1220;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1F2937;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <circle cx="150" cy="100" r="80" fill="#F59E0B" opacity="0.1"/>
+  <circle cx="1050" cy="530" r="120" fill="#F59E0B" opacity="0.08"/>
+  
+  <text x="100" y="180" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="#FFFFFF">
+    Elektro pohotovost
+  </text>
+  
+  <text x="100" y="250" font-family="Arial, sans-serif" font-size="48" fill="#F59E0B">
+    NONSTOP 24/7
+  </text>
+  
+  <text x="100" y="330" font-family="Arial, sans-serif" font-size="28" fill="#B7C3D6">
+    Výpadky proudu • Zkraty • Jističe
+  </text>
+  
+  <text x="100" y="385" font-family="Arial, sans-serif" font-size="28" fill="#B7C3D6">
+    Praha-západ • Západní Praha • Beroun
+  </text>
+  
+  <rect x="95" y="430" width="420" height="90" rx="12" fill="#F59E0B" opacity="0.15" stroke="#F59E0B" stroke-width="2"/>
+  <text x="130" y="485" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#FFFFFF">
+    ☎ 774 621 763
+  </text>
+  
+  <text x="100" y="580" font-family="Arial, sans-serif" font-size="24" fill="#64748B">
+    Maloni s.r.o. | elektropohotovost24.cz
+  </text>
+</svg>

@@ -21,7 +21,19 @@ export const metadata: Metadata = {
 		description:
 			"Orientační ceník elektro pohotovosti 24/7: výjezd, diagnostika, hodinová práce a materiál. Přesnou cenu vždy potvrdíme před zahájením práce.",
 		type: "website",
-		url: canonical
+		url: canonical,
+		images: [{
+			url: "/og-images/default.svg",
+			width: 1200,
+			height: 630,
+			alt: "Ceník - Elektro pohotovost 24/7"
+		}]
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: `Ceník | ${siteName}`,
+		description: "Orientační ceník elektro pohotovosti 24/7: výjezd, diagnostika, hodinová práce a materiál.",
+		images: ["/og-images/default.svg"]
 	}
 };
 

@@ -10,7 +10,25 @@ export const dynamic = "error";
 export const metadata: Metadata = {
 	title: "Kategorie blogu",
 	description: "Přehled kategorií blogu: elektro havárie, jištění, bezpečnost a plánované opravy.",
-	alternates: { canonical: absoluteUrl("/blog/kategorie/") }
+	alternates: { canonical: absoluteUrl("/blog/kategorie/") },
+	openGraph: {
+		type: "website",
+		title: "Kategorie blogu | Elektro pohotovost",
+		description: "Přehled kategorií blogu: elektro havárie, jištění, bezpečnost a plánované opravy.",
+		url: absoluteUrl("/blog/kategorie/"),
+		images: [{
+			url: "/og-images/blog.svg",
+			width: 1200,
+			height: 630,
+			alt: "Kategorie blogu - Elektro pohotovost"
+		}]
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "Kategorie blogu | Elektro pohotovost",
+		description: "Přehled kategorií blogu: elektro havárie, jištění, bezpečnost a plánované opravy.",
+		images: ["/og-images/blog.svg"]
+	}
 };
 
 export default async function BlogCategoriesIndexPage() {

@@ -23,7 +23,19 @@ export const metadata: Metadata = {
 		description:
 			"Havarijní elektrikář NONSTOP 24/7. Výpadek proudu, zkrat, rozvaděč, jistič/chránič. Rychlá domluva po telefonu.",
 		type: "website",
-		url: canonical
+		url: canonical,
+		images: [{
+			url: "/og-images/services.svg",
+			width: 1200,
+			height: 630,
+			alt: "Elektro pohotovost NONSTOP 24/7"
+		}]
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: `Elektro pohotovost NONSTOP 24/7 | ${siteName}`,
+		description: "Havarijní elektrikář NONSTOP 24/7. Výpadek proudu, zkrat, rozvaděč, jistič/chránič.",
+		images: ["/og-images/services.svg"]
 	}
 };
 
