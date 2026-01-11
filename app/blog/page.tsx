@@ -14,6 +14,17 @@ export const metadata: Metadata = {
 	title: "Blog",
 	description: "Praktické návody a vysvětlení z terénu: elektro havárie, jištění, bezpečnost a plánované opravy.",
 	alternates: { canonical: absoluteUrl("/blog/") },
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-video-preview': -1,
+			'max-image-preview': 'large',
+			'max-snippet': -1
+		}
+	},
 	openGraph: {
 		type: "website",
 		title: "Blog | Elektro pohotovost",

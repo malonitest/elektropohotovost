@@ -31,6 +31,17 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 		title: post.title,
 		description: post.description,
 		alternates: { canonical },
+		robots: {
+			index: true,
+			follow: true,
+			googleBot: {
+				index: true,
+				follow: true,
+				'max-video-preview': -1,
+				'max-image-preview': 'large',
+				'max-snippet': -1
+			}
+		},
 		openGraph: {
 			type: "article",
 			title: post.title,

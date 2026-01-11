@@ -11,6 +11,17 @@ export const metadata: Metadata = {
 	title: "Kategorie blogu",
 	description: "Přehled kategorií blogu: elektro havárie, jištění, bezpečnost a plánované opravy.",
 	alternates: { canonical: absoluteUrl("/blog/kategorie/") },
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-video-preview': -1,
+			'max-image-preview': 'large',
+			'max-snippet': -1
+		}
+	},
 	openGraph: {
 		type: "website",
 		title: "Kategorie blogu | Elektro pohotovost",

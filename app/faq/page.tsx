@@ -16,6 +16,17 @@ export const metadata: Metadata = {
 	description:
 		"Časté dotazy k elektro pohotovosti 24/7: dojezd, ceny, jističe/chrániče, bezpečnost a kdy volat distributora.",
 	alternates: { canonical },
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-video-preview': -1,
+			'max-image-preview': 'large',
+			'max-snippet': -1
+		}
+	},
 	openGraph: {
 		title: `FAQ | ${siteName}`,
 		description:

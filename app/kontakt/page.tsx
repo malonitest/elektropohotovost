@@ -24,6 +24,17 @@ export const metadata: Metadata = {
 	description:
 		"Kontakt na Maloni s.r.o. – Elektro pohotovost NONSTOP 24/7. Volejte pro dostupnost, dojezd a orientační cenu.",
 	alternates: { canonical: absoluteUrl("/kontakt/") },
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-video-preview': -1,
+			'max-image-preview': 'large',
+			'max-snippet': -1
+		}
+	},
 	openGraph: {
 		type: "website",
 		title: `Kontakt | ${siteName}`,

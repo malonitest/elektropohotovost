@@ -22,7 +22,18 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 	return {
 		title: category.name,
 		description: category.short,
-		alternates: { canonical }
+		alternates: { canonical },
+		robots: {
+			index: true,
+			follow: true,
+			googleBot: {
+				index: true,
+				follow: true,
+				'max-video-preview': -1,
+				'max-image-preview': 'large',
+				'max-snippet': -1
+			}
+		}
 	};
 }
 

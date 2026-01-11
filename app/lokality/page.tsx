@@ -15,6 +15,17 @@ export const metadata: Metadata = {
 	description:
 		"Seznam lokalit pro elektro pohotovost 24/7. Vyhledejte svou obec/městskou část a otevřete detail s postupem, ceníkem a kontakty.",
 	alternates: { canonical: absoluteUrl("/lokality/") },
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-video-preview': -1,
+			'max-image-preview': 'large',
+			'max-snippet': -1
+		}
+	},
 	openGraph: {
 		title: `Lokality | ${siteName}`,
 		description:

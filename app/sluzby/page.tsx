@@ -15,6 +15,17 @@ export const metadata: Metadata = {
 	description:
 		"Přehled služeb: elektro pohotovost NONSTOP 24/7 (havarijní zásahy) a hodinový manžel (plánované opravy a montáže). Přehledně, důvěryhodně, bez míchání služeb.",
 	alternates: { canonical: absoluteUrl("/sluzby/") },
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-video-preview': -1,
+			'max-image-preview': 'large',
+			'max-snippet': -1
+		}
+	},
 	openGraph: {
 		type: "website",
 		title: `Služby | ${siteName}`,

@@ -18,6 +18,17 @@ export const metadata: Metadata = {
 	description:
 		"Hodinový manžel pro plánované práce: drobné opravy v bytě, montáž nábytku, vrtání a věšení, drobné instalatérské a elektro práce. Praha, Praha-západ, Beroun.",
 	alternates: { canonical },
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-video-preview': -1,
+			'max-image-preview': 'large',
+			'max-snippet': -1
+		}
+	},
 	openGraph: {
 		title: `Hodinový manžel – opravy a montáže | ${siteName}`,
 		description:

@@ -37,7 +37,12 @@ export const metadata: Metadata = {
 	},
 	robots: {
 		index: false,
-		follow: true
+		follow: true,
+		nocache: true,
+		googleBot: {
+			index: false,
+			follow: true
+		}
 	}
 };
 

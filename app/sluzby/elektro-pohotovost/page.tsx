@@ -18,6 +18,17 @@ export const metadata: Metadata = {
 	description:
 		"Havarijní elektrikář NONSTOP 24/7. Řešíme výpadky elektřiny, zkraty, jističe/chrániče a poruchy rozvaděče. Dostupnost a cenu upřesníme po telefonu.",
 	alternates: { canonical },
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-video-preview': -1,
+			'max-image-preview': 'large',
+			'max-snippet': -1
+		}
+	},
 	openGraph: {
 		title: `Elektro pohotovost NONSTOP 24/7 | ${siteName}`,
 		description:
