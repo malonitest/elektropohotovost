@@ -7,7 +7,7 @@ import { ServiceHero, ServiceFAQ, ServicePriceBox } from "../../../src/component
 
 import { brandRegionText, phone, siteName } from "../../../src/data/site";
 import { absoluteUrl } from "../../../src/lib/urls";
-import { buildBreadcrumbList, buildLocalBusiness, buildWebPage } from "../../../src/lib/jsonld";
+import { buildBreadcrumbList, buildLocalBusiness, buildWebPage, buildFaqPage } from "../../../src/lib/jsonld";
 
 export const dynamic = "error";
 
@@ -104,7 +104,8 @@ export default function HodinovyManzelPage() {
 		buildBreadcrumbList(
 			canonical,
 			breadcrumbs.map((b) => ({ ...b, url: b.url }))
-		)
+		),
+		buildFaqPage(canonical, [...faq], "Scheduled")
 	];
 
 	return (

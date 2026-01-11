@@ -7,7 +7,7 @@ import { ServiceHero, ServicePriceBox, ServiceFAQ } from "../../../src/component
 
 import { brandRegionText, phone, serviceHours, siteName } from "../../../src/data/site";
 import { absoluteUrl } from "../../../src/lib/urls";
-import { buildBreadcrumbList, buildLocalBusiness, buildService, buildWebPage } from "../../../src/lib/jsonld";
+import { buildBreadcrumbList, buildLocalBusiness, buildService, buildWebPage, buildFaqPage } from "../../../src/lib/jsonld";
 
 export const dynamic = "error";
 
@@ -60,21 +60,6 @@ export default function ElektroPohotovostServicePage() {
 		{ name: "Elektro pohotovost", url: canonical }
 	];
 
-	const jsonLdGraph = [
-		buildLocalBusiness(canonical, brandRegionText),
-		buildService(canonical, "NONSTOP 24/7"),
-		buildWebPage({
-			url: canonical,
-			name: "Elektro pohotovost NONSTOP 24/7",
-			description:
-				"Havarijní elektrikář NONSTOP 24/7 pro poruchy elektroinstalace. Výjezdy v regionu Praha-západ, západní Praha, Beroun a okolí."
-		}),
-		buildBreadcrumbList(
-			canonical,
-			breadcrumbs.map((b) => ({ ...b, url: b.url }))
-		)
-	];
-
 	const faq = [
 		{
 			question: "Kdy je elektro pohotovost správná volba?",
@@ -107,6 +92,22 @@ export default function ElektroPohotovostServicePage() {
 				"Primárně Praha-západ, západní Praha, Beroun a okolí. Detailní lokality najdete v seznamu lokalit; pro aktuální dojezd je nejlepší zavolat."
 		}
 	] as const;
+
+	const jsonLdGraph = [
+		buildLocalBusiness(canonical, brandRegionText),
+		buildService(canonical, "NONSTOP 24/7"),
+		buildWebPage({
+			url: canonical,
+			name: "Elektro pohotovost NONSTOP 24/7",
+			description:
+				"Havarijní elektrikář NONSTOP 24/7 pro poruchy elektroinstalace. Výjezdy v regionu Praha-západ, západní Praha, Beroun a okolí."
+		}),
+		buildBreadcrumbList(
+			canonical,
+			breadcrumbs.map((b) => ({ ...b, url: b.url }))
+		),
+		buildFaqPage(canonical, [...faq], "Emergency")
+	];
 
 	return (
 		<>

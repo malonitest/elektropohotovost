@@ -184,15 +184,89 @@ export function buildBreadcrumbList(url: string, items: BreadcrumbItem[]) {
 	};
 }
 
-export function buildFaqPage(url: string, faq: FaqItem[]) {
+export function buildFaqPage(url: string, faq: FaqItem[], category?: "Emergency" | "Scheduled") {
 	return {
 		"@type": "FAQPage",
 		"@id": `${url}#faq`,
-		mainEntity: faq.map((q) => ({
-			"@type": "Question",
-			name: q.question,
-			acceptedAnswer: { "@type": "Answer", text: q.answer }
+		mainEntity: faq.map((q) => {
+			const question: Record<string, unknown> = {
+				"@type": "Question",
+				name: q.question,
+				acceptedAnswer: { "@type": "Answer", text: q.answer }
+			};
+			
+			// Add category context to help AI understand question type
+			if (category) {
+				question.about = {
+					"@type": "Thing",
+					name: category === "Emergency" ? "Emergency Electrical Services" : "Scheduled Electrical Services"
+				};
+			}
+			
+			return question;
+		})
+	};
+}
+
+export function buildHowTo(params: {
+	url: string;
+	name: string;
+	description: string;
+	steps: { name: string; text: string; }[];
+	totalTime?: string; // ISO 8601 duration e.g. "PT5M" for 5 minutes
+	toolsNeeded?: string[];
+}) {
+	const { url, name, description, steps, totalTime, toolsNeeded } = params;
+	
+	const howTo: Record<string, unknown> = {
+		"@type": "HowTo",
+		"@id": `${url}#howto`,
+		name,
+		description,
+		step: steps.map((step, idx) => ({
+			"@type": "HowToStep",
+			position: idx + 1,
+			name: step.name,
+			text: step.text
 		}))
+	};
+	
+	if (totalTime) {
+		howTo.totalTime = totalTime;
+	}
+	
+	if (toolsNeeded && toolsNeeded.length > 0) {
+		howTo.tool = toolsNeeded.map(tool => ({
+			"@type": "HowToTool",
+			name: tool
+		}));
+	}
+	
+	return howTo;
+}
+
+export function buildVideoObject(params: {
+	url: string;
+	name: string;
+	description: string;
+	thumbnailUrl: string;
+	uploadDate: string; // ISO 8601 date
+	duration: string; // ISO 8601 duration e.g. "PT3M" for 3 minutes
+	contentUrl: string; // YouTube URL
+	embedUrl?: string; // YouTube embed URL
+}) {
+	const { url, name, description, thumbnailUrl, uploadDate, duration, contentUrl, embedUrl } = params;
+	
+	return {
+		"@type": "VideoObject",
+		"@id": `${url}#video`,
+		name,
+		description,
+		thumbnailUrl,
+		uploadDate,
+		duration,
+		contentUrl,
+		embedUrl: embedUrl || contentUrl.replace("watch?v=", "embed/")
 	};
 }
 
@@ -266,14 +340,15 @@ export function graphForAreaPage(params: {
 	area: Area;
 	breadcrumbs: BreadcrumbItem[];
 	faq: FaqItem[];
+	faqCategory?: "Emergency" | "Scheduled";
 }) {
-	const { url, area, breadcrumbs, faq } = params;
+	const { url, area, breadcrumbs, faq, faqCategory } = params;
 	return [
 		buildWebSite(),
 		buildLocalBusiness(url, area.name),
 		buildService(url, area.name),
 		buildBreadcrumbList(url, breadcrumbs),
-		buildFaqPage(url, faq)
+		buildFaqPage(url, faq, faqCategory)
 	];
 }
 
@@ -283,14 +358,15 @@ export function graphForLocationPage(params: {
 	location: Location;
 	breadcrumbs: BreadcrumbItem[];
 	faq: FaqItem[];
+	faqCategory?: "Emergency" | "Scheduled";
 }) {
-	const { url, area, location, breadcrumbs, faq } = params;
+	const { url, area, location, breadcrumbs, faq, faqCategory } = params;
 	return [
 		buildWebSite(),
 		buildLocalBusiness(url, area.name),
 		buildService(url, location.name),
 		buildBreadcrumbList(url, breadcrumbs),
-		buildFaqPage(url, faq)
+		buildFaqPage(url, faq, faqCategory)
 	];
 }
 
@@ -300,15 +376,16 @@ export function graphForGenericPage(params: {
 	areaServedName: string;
 	breadcrumbs: BreadcrumbItem[];
 	faq?: FaqItem[];
+	faqCategory?: "Emergency" | "Scheduled";
 }) {
-	const { url, placeName, areaServedName, breadcrumbs, faq = [] } = params;
+	const { url, placeName, areaServedName, breadcrumbs, faq = [], faqCategory } = params;
 	const graph = [
 		buildWebSite(),
 		buildLocalBusiness(url, areaServedName),
 		buildService(url, placeName),
 		buildBreadcrumbList(url, breadcrumbs)
 	];
-	if (faq.length) graph.push(buildFaqPage(url, faq));
+	if (faq.length) graph.push(buildFaqPage(url, faq, faqCategory));
 	return graph;
 }
 
@@ -319,16 +396,17 @@ export function graphForLocationLandingPage(params: {
 	pageDescription: string;
 	breadcrumbs?: BreadcrumbItem[];
 	faq: FaqItem[];
+	faqCategory?: "Emergency" | "Scheduled";
 	location?: { 
 		name: string; 
 		coordinates?: { latitude: number; longitude: number };
 	};
 }) {
-	const { url, placeName, pageName, pageDescription, breadcrumbs = [], faq, location } = params;
+	const { url, placeName, pageName, pageDescription, breadcrumbs = [], faq, faqCategory, location } = params;
 	const graph = [
 		buildWebSite(),
 		buildLocalBusiness(url, placeName),
-		buildFaqPage(url, faq),
+		buildFaqPage(url, faq, faqCategory),
 		buildWebPage({ url, name: pageName, description: pageDescription })
 	];
 	
@@ -351,7 +429,8 @@ export function graphForProblemPage(params: {
 	url: string;
 	breadcrumbs: BreadcrumbItem[];
 	faq: FaqItem[];
+	faqCategory?: "Emergency" | "Scheduled";
 }) {
-	const { url, breadcrumbs, faq } = params;
-	return [buildBreadcrumbList(url, breadcrumbs), buildFaqPage(url, faq)];
+	const { url, breadcrumbs, faq, faqCategory } = params;
+	return [buildBreadcrumbList(url, breadcrumbs), buildFaqPage(url, faq, faqCategory)];
 }

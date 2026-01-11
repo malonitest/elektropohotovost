@@ -11,7 +11,7 @@ import { mdxComponents } from "../../../src/components/blog/MdxComponents";
 
 import { blogAuthor } from "../../../src/data/author";
 import { absoluteUrl } from "../../../src/lib/urls";
-import { buildBlogPosting, buildBreadcrumbList, buildFaqPage } from "../../../src/lib/jsonld";
+import { buildBlogPosting, buildBreadcrumbList, buildFaqPage, buildHowTo, buildVideoObject } from "../../../src/lib/jsonld";
 import { getAllPosts, getPostBySlug } from "../../../src/lib/blog";
 
 export const dynamic = "error";
@@ -103,7 +103,56 @@ export default async function BlogPostPage(props: { params: Promise<{ slug: stri
 	];
 
 	if (post.faq && post.faq.length) {
-		jsonLdGraph.push(buildFaqPage(canonical, post.faq));
+		jsonLdGraph.push(buildFaqPage(canonical, post.faq, "Emergency"));
+	}
+
+	// Add HowTo schema for the power outage guide
+	if (post.slug === "co-delat-pri-vypadku-proudu-navod") {
+		jsonLdGraph.push(buildHowTo({
+			url: canonical,
+			name: "Co dělat při výpadku proudu",
+			description: "Bezpečný postup jak zkontrolovat jistič a identifikovat problém při výpadku elektřiny",
+			totalTime: "PT5M",
+			steps: [
+				{
+					name: "Zkontrolujte rozsah výpadku",
+					text: "Podívejte se z okna, jestli svítí sousedům nebo veřejné osvětlení. Zjistěte, jestli je problém jen u vás, nebo i v celém domě či ulici."
+				},
+				{
+					name: "Najděte rozvaděč",
+					text: "V bytě bývá rozvaděč obvykle u vchodu nebo v chodbě. V domě může být v technické místnosti nebo garáži. Hledejte šedou nebo bílou skříňku s popisky '230V' nebo 'elektro'."
+				},
+				{
+					name: "Zkontrolujte jističe a chrániče",
+					text: "Otevřete rozvaděč a podívejte se na přepínače. Spadlý jistič má páčku v poloze '0' nebo 'dolů'. Pokud vidíte zápach, jiskření nebo kouř, vypněte hlavní jistič a zavolejte elektrikáře."
+				},
+				{
+					name: "Odpojte podezřelé spotřebiče",
+					text: "Než zkusíte jistič nahodit, odpojte varnou desku, troubu, bojler, pračku, myčku a další výkonné spotřebiče. Pokud některý způsobil zkrat, při nahození by to mohlo znovu vyhodit."
+				},
+				{
+					name: "Zkuste jednou nahodit jistič",
+					text: "Pouze pokud nevidíte varovné signály: přehoďte spadlý jistič zpět do polohy '1' nebo 'nahoru', počkejte 5 sekund a zkontrolujte, jestli proud funguje."
+				},
+				{
+					name: "Rozhodněte se, co dál",
+					text: "Pokud jistič okamžitě spadl znovu, neodhazujte víckrát a zavolejte elektrikáře. Pokud cítíte zápach, vidíte kouř nebo jiskření, volejte elektro pohotovost ihned na 774 621 763."
+				}
+			],
+			toolsNeeded: ["Baterka nebo svíčka", "Telefon na zavolání pomoci"]
+		}));
+
+		// Add VideoObject schema for the YouTube tutorial
+		jsonLdGraph.push(buildVideoObject({
+			url: canonical,
+			name: "Jak bezpečně nahodit jistič",
+			description: "Praktická video ukázka, jak správně a bezpečně postupovat při výpadku proudu a jak nahodit jistič.",
+			thumbnailUrl: "https://i.ytimg.com/vi/g19k0Nh9N1I/maxresdefault.jpg",
+			uploadDate: "2024-01-15",
+			duration: "PT3M45S",
+			contentUrl: "https://www.youtube.com/watch?v=g19k0Nh9N1I",
+			embedUrl: "https://www.youtube.com/embed/g19k0Nh9N1I"
+		}));
 	}
 
 	return (
