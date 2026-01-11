@@ -8,6 +8,7 @@
 	body {
 		@apply bg-background text-text-primary antialiased;
 		min-height: 100dvh;
+		font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
 		font-feature-settings: "ss01" 1, "ss02" 1;
 	}
 	a { @apply text-primary underline underline-offset-4 decoration-slate-300 hover:decoration-slate-500; }

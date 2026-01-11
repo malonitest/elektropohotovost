@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 import SiteFooter from "../src/components/ui/Footer";
@@ -6,6 +7,12 @@ import MobileMenu from "../src/components/ui/MobileMenu";
 import Analytics from "../src/components/analytics/Analytics";
 
 import { baseUrl, businessName, phone, serviceHours, siteName } from "../src/data/site";
+
+const inter = Inter({
+	subsets: ['latin', 'latin-ext'],
+	display: 'swap',
+	variable: '--font-inter'
+});
 
 export const metadata: Metadata = {
 	title: {
@@ -37,7 +44,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	const telHref = tel ? `tel:${tel}` : undefined;
 
 	return (
-		<html lang="cs">
+		<html lang="cs" className={inter.variable}>
+			<head>
+				<link rel="preconnect" href="https://www.clarity.ms" />
+				<link rel="dns-prefetch" href="https://www.google.com" />
+			</head>
 			<body>
 				<Analytics clarityId="uu2c3wx4m1" phone={phone} />
 				<header className="siteHeader">
